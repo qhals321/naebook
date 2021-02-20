@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require("path");
+const path = require('path');
 
 module.exports = {
   outputDir: path.resolve(__dirname, '../src/main/resources/static/'),
@@ -8,8 +8,8 @@ module.exports = {
       '/api': {
         target: 'http://localhost:9000',
         ws: true,
-        changeOrigin: true
-      }
-    }
-  }
+        changeOrigin: true,
+      },
+    },
+  },
 };

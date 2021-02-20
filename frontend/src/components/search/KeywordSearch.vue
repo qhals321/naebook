@@ -12,9 +12,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-@Component
-export default class KeywordSearch extends Vue {}
+  import { Vue, Component } from 'vue-property-decorator';
+  @Component
+  export default class KeywordSearch extends Vue {}
 </script>
 
 <style scoped></style>

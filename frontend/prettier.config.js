@@ -3,5 +3,8 @@ module.exports = {
   semi: true,
   useTabs: false,
   tabWidth: 2,
-  bracketSpacing: true
+  bracketSpacing: true,
+  trailingComma: true,
+  vueIndentScriptAndStyle: true,
+  printWidth: 80,
 };

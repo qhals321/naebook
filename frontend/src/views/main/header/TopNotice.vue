@@ -14,9 +14,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-@Component
-export default class TopNotice extends Vue {}
+  import { Vue, Component } from 'vue-property-decorator';
+  @Component
+  export default class TopNotice extends Vue {}
 </script>
 
 <style scoped></style>
