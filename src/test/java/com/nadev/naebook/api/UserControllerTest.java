@@ -80,7 +80,7 @@ class UserControllerTest {
             .content(new ObjectMapper().writeValueAsString(profileRequestDto))
             .session(session)
     )
-    //then
+        //then
         .andExpect(status().is4xxClientError());
   }
 
@@ -104,11 +104,32 @@ class UserControllerTest {
             .content(new ObjectMapper().writeValueAsString(profileRequestDto))
             .session(session)
     )
-    //then
+        //then
         .andExpect(status().isOk())
         .andExpect(jsonPath("name").value(expectedName))
         .andExpect(jsonPath("bio").value(expectedBio))
         .andExpect(jsonPath("picture").value(expectedPicture))
         .andExpect(jsonPath("email").value(user.getEmail()));
+  }
+
+  @Test
+  @WithMockUser
+  public void followTest() throws Exception {
+    //given
+    String followeeEmail = "bomin_93@naver.com";
+    userRepository.save(
+        User.builder()
+            .email(followeeEmail)
+            .name("")
+            .role(Role.USER)
+            .build()
+    );
+    //when
+    mockMvc.perform(post("/api/follow")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(followeeEmail)
+        .session(session)
+    ).andExpect(status().isOk());
+    //then
   }
 }
