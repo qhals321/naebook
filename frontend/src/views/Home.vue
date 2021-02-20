@@ -7,7 +7,8 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import HelloWorld from "@/components/HelloWorld.vue";
-import {fetchProfile} from "@/api"; // @ is an alias to /src
+import { fetchProfile } from "@/api";
+import { Profile } from "@/types";
 
 @Component({
   components: {
@@ -16,8 +17,8 @@ import {fetchProfile} from "@/api"; // @ is an alias to /src
 })
 export default class Home extends Vue {
 	async created() {
-		const result = await fetchProfile();
-		console.log(result);
+		const profile: Profile = await fetchProfile();
+		console.log(profile.name);
 	}
 }
 </script>
