@@ -1,0 +1,39 @@
+:root {
+	--color-black: #4f4f4f;
+	--color-dark-gray: #828282;
+	--color-gray: #bdbdbd;
+	--color-lite-gray: #F8F8F8;
+	--color-navy: #465562;
+	--color-dark-beige: #c2ae92;
+	--color-beige: #e4ddd1;
+	--color-yellow: #FFE49B;
+	--color-dark-white: #e5e5e5;
+	--color-white: #ffffff;
+	
+	--font-logo: 40px;
+	--font-title: 30px;
+	--font-xlarge: 28px;
+	--font-large: 24px;
+	--font-regular: 16px;
+	--font-small: 14px;
+	
+	--font-style-gloria: 'Gloria Hallelujah', cursive;
+	--font-style-doheyn: 'Do Hyeon', sans-serif;
+	--font-style-noto: 'Noto Sans KR', sans-serif;
+	--font-style-lato: 'Lato', sans-serif;
+	
+	--weight-bold: 700;
+	--weight-semi-bold: 600;
+	--weight-regular: 400;
+	
+	--size-border-radius-large: 32px;
+	--size-border-radius-normal: 4px;
+	
+	--button-large-width: 14rem;
+	--button-large-height: 2.2rem;
+	--button-regular-width: 7rem;
+	--button-regular-height: 2rem;
+	--button-small-width: 5rem;
+	--button-small-height: 2rem;
+}
+
