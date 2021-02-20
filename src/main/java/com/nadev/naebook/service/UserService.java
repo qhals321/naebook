@@ -28,6 +28,7 @@ public class UserService {
     return findUser;
   }
 
+  @Transactional
   public Relation follow(String followerEmail, String followeeEmail) {
     User follower = userRepository.findByEmail(followerEmail)
         .orElseThrow(UserNotFoundException::new);
