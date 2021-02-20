@@ -10,6 +10,10 @@ const instance: AxiosInstance = axios.create({
 })
 
 export async function fetchProfile() {
-	const { data } = await instance.get('/profile');
-	return data
+	try {
+		const { data } = await instance.get('/profile');
+		return data
+	} catch (e) {
+		console.log(e)
+	}
 }
