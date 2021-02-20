@@ -1,12 +1,15 @@
-import axios from 'axios';
-// import {Profile} from "@/types";
+import axios, { AxiosInstance } from 'axios';
 
-//
+const instance: AxiosInstance = axios.create({
+	baseURL: 'http://localhost:8080/api',
+	headers: {
+		'Access-Control-Allow-Origin': '*',
+		'Content-Type': 'application/json;charset=utf-8',
+	},
+	timeout: 100000,
+})
+
 export async function fetchProfile() {
-	try {
-		const result = await axios.get('http://localhost:8080/api/profile');
-		return result.data
-	} catch (e) {
-		console.log(e)
-	}
+	const { data } = await instance.get('/profile');
+	return data
 }

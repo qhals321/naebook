@@ -15,11 +15,7 @@ import {fetchProfile} from "@/api"; // @ is an alias to /src
   }
 })
 export default class Home extends Vue {
-	created() {
-		this.fetch();
-		console.log("hi");
-	}
-	async fetch() {
+	async created() {
 		const result = await fetchProfile();
 		console.log(result);
 	}
