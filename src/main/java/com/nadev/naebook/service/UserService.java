@@ -29,9 +29,8 @@ public class UserService {
   }
 
   @Transactional
-  public Relation follow(String followerEmail, String followeeEmail) {
-    User follower = userRepository.findByEmail(followerEmail)
-        .orElseThrow(UserNotFoundException::new);
+  public Relation follow(SessionUser currentUser, String followeeEmail) {
+    User follower = currentUser.toUserEntity();
     User followee = userRepository.findByEmail(followeeEmail)
         .orElseThrow(UserNotFoundException::new);
 

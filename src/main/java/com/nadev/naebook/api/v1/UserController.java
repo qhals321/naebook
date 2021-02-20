@@ -48,7 +48,7 @@ public class UserController {
 
   @PostMapping("/follow")
   public ResponseEntity followUser(@LoginUser SessionUser user, @RequestBody @NotEmpty String email) {
-    userService.follow(user.getEmail(), email);
+    userService.follow(user, email);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
