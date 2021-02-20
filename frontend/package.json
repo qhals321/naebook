@@ -9,6 +9,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/url-template": "^2.0.28",
+    "cache-loader": "^4.1.0",
     "core-js": "^3.6.5",
     "path": "^0.12.7",
     "request": "^2.88.2",
