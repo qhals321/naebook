@@ -7,7 +7,21 @@
     <router-view />
   </div>
 </template>
-
+<script lang="ts">
+import { Vue, Component } from "vue-property-decorator";
+import { fetchProfile } from "@/api";
+@Component
+export default class App extends Vue {
+  created() {
+    this.fetch();
+    console.log("hi");
+  }
+  async fetch() {
+    const result = await fetchProfile();
+    console.log(result);
+  }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
