@@ -1,3 +1,5 @@
+const prettierRules = require('./prettier.config');
+
 module.exports = {
   root: true,
   env: {
@@ -14,6 +16,7 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    'prettier/prettier': ['error', prettierRules],
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off"
   },
