@@ -1,7 +1,11 @@
 package com.nadev.naebook.auth;
 
+import com.nadev.naebook.auth.dto.OAuthAttributes;
+import com.nadev.naebook.auth.dto.SessionUser;
 import com.nadev.naebook.domain.user.User;
+import com.nadev.naebook.repository.UserRepository;
 import java.util.Collections;
+import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,7 +40,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     // OAuthAttributes: attribute를 담을 클래스 (개발자가 생성)
     OAuthAttributes attributes = OAuthAttributes
         .of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-    User user = saveOrUpdate(attributes);
+
+    User user = saveIfAbsent(attributes);
+
     // SessioUser: 세션에 사용자 정보를 저장하기 위한 DTO 클래스 (개발자가 생성)
     httpSession.setAttribute("user", new SessionUser(user));
     return new DefaultOAuth2User(
@@ -46,10 +52,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     );
   }
 
-  private User saveOrUpdate(OAuthAttributes attributes) {
-    User user = userRepository.findByEmail(attributes.getEmail())
-        .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
-        .orElse(attributes.toEntity());
-    return userRepository.save(user);
+  private User saveIfAbsent(OAuthAttributes attributes) {
+    return userRepository.findByEmail(attributes.getEmail())
+        .or(() -> Optional.of(userRepository.save(attributes.toEntity())))
+        .orElseThrow(IllegalStateException::new);
   }
 }

@@ -1,4 +1,4 @@
-package com.nadev.naebook.auth;
+package com.nadev.naebook.auth.dto;
 
 import com.nadev.naebook.domain.user.Role;
 import com.nadev.naebook.domain.user.User;

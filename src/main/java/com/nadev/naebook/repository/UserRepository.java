@@ -1,4 +1,4 @@
-package com.nadev.naebook.auth;
+package com.nadev.naebook.repository;
 
 import com.nadev.naebook.domain.user.User;
 import java.util.Optional;
