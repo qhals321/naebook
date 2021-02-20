@@ -114,12 +114,27 @@ class UserControllerTest {
 
   @Test
   @WithMockUser
+  @DisplayName("이메일이 비어있을 때 오류")
+  public void followFail() throws Exception {
+    //given
+    String followerEmail = "";
+    //when
+    mockMvc.perform(post("/api/follow")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(followerEmail)
+        .session(session)
+    ).andExpect(status().is4xxClientError());
+    //then
+  }
+
+  @Test
+  @WithMockUser
   public void followTest() throws Exception {
     //given
-    String followeeEmail = "bomin_93@naver.com";
+    String followerEmail = "bomin_93@naver.com";
     userRepository.save(
         User.builder()
-            .email(followeeEmail)
+            .email(followerEmail)
             .name("")
             .role(Role.USER)
             .build()
@@ -127,7 +142,7 @@ class UserControllerTest {
     //when
     mockMvc.perform(post("/api/follow")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(followeeEmail)
+        .content(followerEmail)
         .session(session)
     ).andExpect(status().isOk());
     //then

@@ -30,7 +30,7 @@ public class UserController {
   private final UserService userService;
 
   @PatchMapping("/profile/update")
-  public ProfileResponseDto update(@LoginUser SessionUser user,
+  public ProfileResponseDto updateProfile(@LoginUser SessionUser user,
       @RequestBody @Validated ProfileRequestDto profileRequestDto) {
 
 
@@ -39,7 +39,7 @@ public class UserController {
   }
 
   @GetMapping("/profile")
-  public SessionUser get(@LoginUser SessionUser user) {
+  public SessionUser getProfile(@LoginUser SessionUser user) {
     if(user == null) {
       throw new UserNotFoundException();
     }
@@ -47,7 +47,7 @@ public class UserController {
   }
 
   @PostMapping("/follow")
-  public ResponseEntity follow(@LoginUser SessionUser user, @RequestBody @NotEmpty String email) {
+  public ResponseEntity followUser(@LoginUser SessionUser user, @RequestBody @NotEmpty String email) {
     userService.follow(user.getEmail(), email);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
