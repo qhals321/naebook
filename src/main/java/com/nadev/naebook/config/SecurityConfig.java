@@ -1,7 +1,6 @@
 package com.nadev.naebook.config;
 
 import com.nadev.naebook.auth.CustomOAuth2UserService;
-import com.nadev.naebook.domain.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,7 +18,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .authorizeRequests()
         .antMatchers("/login", "/css/**", "/img/**", "/js/**", "/h2/**", "/h2-console/**").permitAll()
-        .antMatchers("/api/v1/**").hasRole(Role.USER.name())
         .anyRequest().authenticated()
         .and()
         .logout().logoutSuccessUrl("/login")
