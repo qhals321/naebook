@@ -16,9 +16,9 @@ import { Profile } from "@/types";
   }
 })
 export default class Home extends Vue {
-	async created() {
-		const profile: Profile = await fetchProfile();
-		console.log(profile.name);
-	}
+  async created() {
+    const profile: Profile = await fetchProfile();
+    console.log(profile.name);
+  }
 }
 </script>
