@@ -9,7 +9,9 @@ import com.nadev.naebook.auth.dto.SessionUser;
 import com.nadev.naebook.domain.user.Role;
 import com.nadev.naebook.domain.user.User;
 import com.nadev.naebook.dto.ProfileRequestDto;
+import com.nadev.naebook.repository.RelationRepository;
 import com.nadev.naebook.repository.UserRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,10 +28,13 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 class UserControllerTest {
 
+  private static final String BASE_URL = "/api/v1/";
   @Autowired
   private MockMvc mockMvc;
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private RelationRepository relationRepository;
   private MockHttpSession session;
   private User user;
 
@@ -47,6 +52,7 @@ class UserControllerTest {
 
   @AfterEach
   void afterEach() {
+    relationRepository.deleteAll();
     userRepository.deleteAll();
     session.clearAttributes();
   }
@@ -56,7 +62,7 @@ class UserControllerTest {
   @DisplayName("Session이 잘 작동이 되는 지 테스트")
   public void userSessionTest() throws Exception {
     mockMvc.perform(
-        get("/api/profile")
+        get(BASE_URL + "profile")
             .contentType(MediaType.APPLICATION_JSON)
             .session(session))
         .andExpect(status().isOk())
@@ -75,7 +81,7 @@ class UserControllerTest {
     profileRequestDto.setPicture("");
     //when
     mockMvc.perform(
-        patch("/api/profile/update")
+        patch(BASE_URL + "profile/update")
             .contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(profileRequestDto))
             .session(session)
@@ -99,7 +105,7 @@ class UserControllerTest {
 
     //when
     mockMvc.perform(
-        patch("/api/profile/update")
+        patch(BASE_URL + "profile/update")
             .contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(profileRequestDto))
             .session(session)
@@ -119,7 +125,7 @@ class UserControllerTest {
     //given
     String followerEmail = "";
     //when
-    mockMvc.perform(post("/api/follow")
+    mockMvc.perform(post(BASE_URL + "follow")
         .contentType(MediaType.APPLICATION_JSON)
         .content(followerEmail)
         .session(session)
@@ -131,6 +137,8 @@ class UserControllerTest {
   @WithMockUser
   public void followTest() throws Exception {
     //given
+    Long expectedFolloweeCount = 0L;
+    Long expectedFollowerCount = 1L;
     String followerEmail = "bomin_93@naver.com";
     userRepository.save(
         User.builder()
@@ -140,11 +148,16 @@ class UserControllerTest {
             .build()
     );
     //when
-    mockMvc.perform(post("/api/follow")
+    mockMvc.perform(post(BASE_URL + "follow")
         .contentType(MediaType.APPLICATION_JSON)
         .content(followerEmail)
         .session(session)
     ).andExpect(status().isOk());
     //then
+    Long followeeCount = relationRepository.countFollowee(user);
+    Long followerCount = relationRepository.countFollower(user);
+    Assertions.assertThat(followeeCount).isEqualTo(expectedFolloweeCount);
+    Assertions.assertThat(followerCount).isEqualTo(expectedFollowerCount);
   }
+
 }

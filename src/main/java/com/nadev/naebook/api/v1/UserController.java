@@ -1,4 +1,4 @@
-package com.nadev.naebook.api;
+package com.nadev.naebook.api.v1;
 
 import com.nadev.naebook.auth.LoginUser;
 import com.nadev.naebook.auth.dto.SessionUser;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 @RestController
 @CrossOrigin(value = "http://localhost:8080")
 public class UserController {
@@ -47,8 +47,8 @@ public class UserController {
   }
 
   @PostMapping("/follow")
-  public ResponseEntity followUser(@LoginUser SessionUser user, @RequestBody @NotEmpty String email) {
-    userService.follow(user.getEmail(), email);
+  public ResponseEntity followUser(@LoginUser SessionUser user, @RequestBody @NotEmpty String followeeEmail) {
+    userService.follow(user, followeeEmail);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 

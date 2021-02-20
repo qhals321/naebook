@@ -32,11 +32,13 @@ public class User extends BaseTimeEntity {
   private Role role;
 
   @Builder
-  public User(String name, String email, String picture, Role role) {
+  public User(String name, String email, String picture, Role role, Long id, String bio) {
     this.name = name;
     this.email = email;
     this.picture = picture;
     this.role = role;
+    this.bio = bio;
+    this.id = id;
   }
 
   public void changeProfile(String name, String picture, String bio) {
