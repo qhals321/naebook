@@ -2,16 +2,18 @@ package com.nadev.naebook.api.v1;
 
 import com.nadev.naebook.auth.LoginUser;
 import com.nadev.naebook.auth.dto.SessionUser;
+import com.nadev.naebook.domain.user.Relation;
 import com.nadev.naebook.domain.user.User;
 import com.nadev.naebook.dto.ProfileRequestDto;
+import com.nadev.naebook.dto.ResponseDto;
 import com.nadev.naebook.exception.UserNotFoundException;
 import com.nadev.naebook.service.UserService;
+import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,12 +32,11 @@ public class UserController {
   private final UserService userService;
 
   @PatchMapping("/profile/update")
-  public ProfileResponseDto updateProfile(@LoginUser SessionUser user,
+  public SessionUser updateProfile(@LoginUser SessionUser user,
       @RequestBody @Validated ProfileRequestDto profileRequestDto) {
-
-
-    User updatedUser = userService.changeProfile(user, profileRequestDto);
-    return new ProfileResponseDto(updatedUser);
+    user.changeProfile(profileRequestDto);
+    userService.changeProfile(user);
+    return user;
   }
 
   @GetMapping("/profile")
@@ -47,25 +48,16 @@ public class UserController {
   }
 
   @PostMapping("/follow")
-  public ResponseEntity followUser(@LoginUser SessionUser user, @RequestBody @NotEmpty String followeeEmail) {
+  public ResponseDto<HttpStatus> followUser(@LoginUser SessionUser user, @RequestBody @NotEmpty String followeeEmail) {
     userService.follow(user, followeeEmail);
-    return ResponseEntity.status(HttpStatus.OK).build();
+    return new ResponseDto<>(HttpStatus.OK);
   }
 
-  @Data
-  static class ProfileResponseDto {
-
-    private String email;
-    private String name;
-    private String picture;
-    private String bio;
-
-    public ProfileResponseDto(User user) {
-      this.email = user.getEmail();
-      this.name = user.getName();
-      this.picture = user.getPicture();
-      this.bio = user.getBio();
-    }
+  @PostMapping("/userTag")
+  public ResponseDto<List<String>> addUserTag(@LoginUser SessionUser user, @RequestBody @NotEmpty String title) {
+    userService.addTag(user, title);
+    user.addTag(title);
+    return new ResponseDto<>(user.getTags());
   }
 
 }

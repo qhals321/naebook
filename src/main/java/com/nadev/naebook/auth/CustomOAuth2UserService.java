@@ -3,7 +3,7 @@ package com.nadev.naebook.auth;
 import com.nadev.naebook.auth.dto.OAuthAttributes;
 import com.nadev.naebook.auth.dto.SessionUser;
 import com.nadev.naebook.domain.user.User;
-import com.nadev.naebook.repository.UserRepository;
+import com.nadev.naebook.repository.user.UserRepository;
 import java.util.Collections;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -53,7 +53,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
   }
 
   private User saveIfAbsent(OAuthAttributes attributes) {
-    return userRepository.findByEmail(attributes.getEmail())
+    return userRepository.findAllByEmail(attributes.getEmail())
         .or(() -> Optional.of(userRepository.save(attributes.toEntity())))
         .orElseThrow(IllegalStateException::new);
   }

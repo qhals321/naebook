@@ -1,6 +1,6 @@
-package com.nadev.naebook.repository;
+package com.nadev.naebook.repository.user;
 
-import com.nadev.naebook.domain.Relation;
+import com.nadev.naebook.domain.user.Relation;
 import com.nadev.naebook.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

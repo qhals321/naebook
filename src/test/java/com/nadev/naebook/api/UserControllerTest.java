@@ -1,16 +1,23 @@
 package com.nadev.naebook.api;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasValue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nadev.naebook.auth.dto.SessionUser;
+import com.nadev.naebook.domain.Tag;
 import com.nadev.naebook.domain.user.Role;
 import com.nadev.naebook.domain.user.User;
 import com.nadev.naebook.dto.ProfileRequestDto;
-import com.nadev.naebook.repository.RelationRepository;
-import com.nadev.naebook.repository.UserRepository;
+import com.nadev.naebook.repository.TagRepository;
+import com.nadev.naebook.repository.user.RelationRepository;
+import com.nadev.naebook.repository.user.UserRepository;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,16 +42,25 @@ class UserControllerTest {
   private UserRepository userRepository;
   @Autowired
   private RelationRepository relationRepository;
+  @Autowired
+  private TagRepository tagRepository;
+
   private MockHttpSession session;
   private User user;
 
   @BeforeEach
   void setUp() {
+    Tag develop = Tag.of("develop");
+    Tag hello = Tag.of("hello");
+    tagRepository.save(develop);
+    tagRepository.save(hello);
     user = User.builder()
         .role(Role.USER)
         .name("bom")
         .email("bomdani9302@gmail.com")
         .build();
+    user.addTag(develop);
+    user.addTag(hello);
     session = new MockHttpSession();
     userRepository.save(user);
     session.setAttribute("user", new SessionUser(user));
@@ -160,4 +176,27 @@ class UserControllerTest {
     Assertions.assertThat(followerCount).isEqualTo(expectedFollowerCount);
   }
 
+  @Test
+  @WithMockUser
+  @DisplayName("유저에게 태그가 잘 들어있는 지 확인")
+  public void tagTest() throws Exception {
+    //given
+    String tagName = "한강";
+    //when
+    mockMvc.perform(post(BASE_URL+"userTag")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(tagName)
+        .session(session)
+    )
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("data").isArray())
+        .andExpect(jsonPath("data").value(hasItem("한강")))
+        .andExpect(jsonPath("data").value(hasItem("develop")))
+        .andExpect(jsonPath("data").value(hasItem("hello")));
+
+    User user = userRepository.findAllByEmail(this.user.getEmail()).get();
+    Assertions.assertThat(user.contains("한강")).isTrue();
+    Assertions.assertThat(user.contains("develop")).isTrue();
+    Assertions.assertThat(user.contains("hello")).isTrue();
+  }
 }

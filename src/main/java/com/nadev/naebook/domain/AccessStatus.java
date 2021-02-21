@@ -1,2 +1,5 @@
-package com.nadev.naebook.domain;public enum AccessStatus {
+package com.nadev.naebook.domain;
+
+public enum AccessStatus {
+  PUBLIC, PRIVATE
 }

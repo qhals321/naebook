@@ -1,10 +1,23 @@
 package com.nadev.naebook.domain.user;
 
 import com.nadev.naebook.domain.BaseTimeEntity;
-import javax.persistence.*;
+import com.nadev.naebook.domain.Tag;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Getter
 @NoArgsConstructor
@@ -31,6 +44,10 @@ public class User extends BaseTimeEntity {
   @Column(nullable = false)
   private Role role;
 
+  @OneToMany(mappedBy = "user")
+  @Cascade(CascadeType.ALL)
+  private List<UserTag> userTags = new ArrayList<>();
+
   @Builder
   public User(String name, String email, String picture, Role role, Long id, String bio) {
     this.name = name;
@@ -47,7 +64,17 @@ public class User extends BaseTimeEntity {
     this.bio = bio;
   }
 
+  public void addTag(Tag tag) {
+    userTags.add(UserTag.of(this, tag));
+  }
+
   public String getRoleKey() {
     return this.role.getKey();
+  }
+
+  public boolean contains(String tagTitle) {
+   return userTags
+       .stream()
+       .anyMatch(tag -> tag.equals(tagTitle));
   }
 }

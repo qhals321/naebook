@@ -1,8 +1,10 @@
-package com.nadev.naebook.domain;
+package com.nadev.naebook.domain.user;
 
+import com.nadev.naebook.domain.Tag;
 import com.nadev.naebook.domain.user.User;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -22,7 +24,22 @@ public class UserTag {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "tag_id")
   private Tag tag;
+
+  public static UserTag of(User user, Tag tag) {
+    UserTag userTag = new UserTag();
+    userTag.user = user;
+    userTag.tag = tag;
+    return userTag;
+  }
+
+  public String title() {
+    return tag.title();
+  }
+
+  public boolean equals(String title) {
+    return tag.equals(title);
+  }
 }
