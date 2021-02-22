@@ -1,4 +1,4 @@
-package com.nadev.naebook.v1.domain.user;
+package com.nadev.naebook.account.auth;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
