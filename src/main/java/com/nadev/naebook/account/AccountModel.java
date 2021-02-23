@@ -4,8 +4,11 @@ package com.nadev.naebook.account;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.hateoas.EntityModel;
 
+@Getter @Setter
 public class AccountModel extends EntityModel<Account> {
 
   private Long id;

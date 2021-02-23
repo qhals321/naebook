@@ -1,5 +1,9 @@
 package com.nadev.naebook.account;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import com.nadev.naebook.account.auth.LoginUser;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +26,8 @@ public class AccountController {
       return ResponseEntity.notFound().build();
     }
     Account account = foundAccount.get();
-    return ResponseEntity.ok(new AccountModel(account));
+    AccountModel model = new AccountModel(account);
+    model.add(linkTo(methodOn(AccountController.class).account(id)).withRel("update-account"));
+    return ResponseEntity.ok(model);
   }
 }

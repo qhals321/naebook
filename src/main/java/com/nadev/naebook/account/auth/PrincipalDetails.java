@@ -4,10 +4,11 @@ import com.nadev.naebook.account.Account;
 import java.util.Collection;
 import java.util.Map;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-@Getter
+@Getter @Setter
 public class PrincipalDetails implements OAuth2User {
 
   private Account account;
