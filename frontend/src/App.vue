@@ -2,7 +2,13 @@
   <div>
     <content-header />
     <label>
-      <input id="onlyMarvel" type="text" name="mcu" autocomplete />
+      <input
+        ref="inputRef"
+        id="onlyMarvel"
+        type="text"
+        name="mcu"
+        autocomplete
+      />
     </label>
     <body-content />
     <footer id="footer"></footer>
@@ -22,8 +28,7 @@
     private tags = ['hi', 'hi'];
     @Ref() private readonly inputRef: HTMLInputElement;
     mounted() {
-      const input = document.getElementById('onlyMarvel');
-      const tagify = new Tagify(input, {
+      const tagify = new Tagify(this.inputRef, {
         whitelist: [
           { value: 'ironman', code: 'im' },
           { value: 'antman', code: 'am' },
