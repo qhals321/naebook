@@ -5,6 +5,7 @@ import store from './store';
 
 import '@/assets/css/root.css';
 import '@/assets/css/main/main.css';
+import '@yaireo/tagify/dist/tagify.css';
 
 Vue.config.productionTip = false;
 
