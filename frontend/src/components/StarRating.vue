@@ -22,7 +22,7 @@
     private currentRating = 0;
     private selectedRating = 0;
 
-    private selectRating() {
+    private selectRating(): void {
       this.selectedRating = this.currentRating;
     }
   }

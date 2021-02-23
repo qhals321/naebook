@@ -34,15 +34,15 @@
     @Prop()
     private readonly selectedRating!: number;
 
-    private mouseMove(type: StarStyleType) {
+    private mouseMove(type: StarStyleType): void {
       type === 'fill' ? this.setCurrentRating() : this.resetRating();
     }
 
-    private setCurrentRating() {
+    private setCurrentRating(): void {
       this.currentRatingSync = this.uniqueKey;
     }
 
-    private resetRating() {
+    private resetRating(): void {
       this.currentRatingSync = this.selectedRating;
     }
 
@@ -52,7 +52,7 @@
       );
     }
 
-    private selectRating() {
+    private selectRating(): void {
       this.$emit('select-rating');
     }
   }
