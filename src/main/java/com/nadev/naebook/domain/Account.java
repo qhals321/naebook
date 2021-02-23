@@ -1,18 +1,22 @@
-package com.nadev.naebook.account;
+package com.nadev.naebook.domain;
 
 import com.nadev.naebook.account.auth.Role;
+import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 @Getter @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -39,7 +43,6 @@ public class Account {
   @Column(nullable = false)
   private Role role;
 
-//  @OneToMany(mappedBy = "user")
-//  @Cascade(CascadeType.ALL)
+//  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 //  private List<UserTag> userTags = new ArrayList<>();
 }

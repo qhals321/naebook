@@ -4,6 +4,7 @@ package com.nadev.naebook.account;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import com.nadev.naebook.domain.Account;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.EntityModel;

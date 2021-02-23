@@ -1,6 +1,6 @@
 package com.nadev.naebook.account.auth;
 
-import com.nadev.naebook.account.Account;
+import com.nadev.naebook.domain.Account;
 import java.util.Collection;
 import java.util.Map;
 import lombok.Getter;

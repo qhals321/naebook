@@ -4,6 +4,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.nadev.naebook.account.auth.LoginUser;
+import com.nadev.naebook.domain.Account;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,15 @@ public class AccountController {
 
   @GetMapping("/account/{id}")
   public ResponseEntity account(@PathVariable Long id) {
+    return findAccountById(id);
+  }
+
+  @GetMapping("/account/me")
+  public ResponseEntity account(@LoginUser Account account) {
+    return findAccountById(account.getId());
+  }
+
+  private ResponseEntity<?> findAccountById(Long id) {
     Optional<Account> foundAccount = accountRepository.findById(id);
     if (foundAccount.isEmpty()) {
       return ResponseEntity.notFound().build();
