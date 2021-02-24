@@ -24,7 +24,7 @@ public class AccountModel extends EntityModel<Account> {
     this.email = account.getEmail();
     this.picture = account.getPicture();
     this.bio = account.getBio();
-    add(linkTo(methodOn(AccountController.class).account(id)).withSelfRel());
+    add(linkTo(methodOn(AccountController.class).accountById(id)).withSelfRel());
   }
 }
 

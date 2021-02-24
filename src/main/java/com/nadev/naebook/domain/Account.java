@@ -43,6 +43,10 @@ public class Account {
   @Column(nullable = false)
   private Role role;
 
-//  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-//  private List<UserTag> userTags = new ArrayList<>();
+  public Account updateAccount(String name, String bio, String picture) {
+    this.name = name;
+    this.bio = bio;
+    this.picture = picture;
+    return this;
+  }
 }
