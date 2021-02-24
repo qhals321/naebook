@@ -53,7 +53,7 @@ public class AccountController {
   private ResponseEntity<?> findAccountById(Long id) {
     Optional<Account> foundAccount = accountRepository.findById(id);
     if (foundAccount.isEmpty()) {
-      return ResponseEntity.badRequest().build();
+      return ResponseEntity.notFound().build();
     }
     Account account = foundAccount.get();
     AccountModel model = new AccountModel(account);
