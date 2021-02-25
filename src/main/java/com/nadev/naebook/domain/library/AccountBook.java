@@ -1,6 +1,7 @@
 package com.nadev.naebook.domain.library;
 
 import com.nadev.naebook.domain.Account;
+import com.nadev.naebook.exception.NotReviewedException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -58,11 +59,11 @@ public class AccountBook {
     this.reviewed = true;
   }
 
-  public void completeBook() {
-    if (!reviewed) {
-      throw new IllegalStateException();
+  public void changeStatus(BookStatus bookStatus) throws NotReviewedException {
+    if (bookStatus == BookStatus.COMPLETE && !reviewed) {
+      throw new NotReviewedException();
     }
-    this.status = BookStatus.COMPLETE;
+    this.status = bookStatus;
   }
 
   public void changeAccess(BookAccess bookAccess) {

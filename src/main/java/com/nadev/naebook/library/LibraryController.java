@@ -12,8 +12,10 @@ import com.nadev.naebook.common.ResponseDto;
 import com.nadev.naebook.domain.Account;
 import com.nadev.naebook.domain.library.AccountBook;
 import com.nadev.naebook.domain.library.BookAccess;
+import com.nadev.naebook.domain.library.BookStatus;
 import com.nadev.naebook.exception.ForbiddenException;
 import com.nadev.naebook.exception.NotFoundException;
+import com.nadev.naebook.exception.NotReviewedException;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -69,7 +71,7 @@ public class LibraryController {
   @GetMapping("/{accountId}/books")
   public ResponseEntity findBooksByAccount(
       @PathVariable Long accountId, @LoginUser Account account) {
-    if (existsAccount(accountId)) {
+    if (!existsAccount(accountId)) {
       return ResponseEntity.notFound().build();
     }
     List<AccountBook> accountBooks = accountBookRepository.findAllByAccount(accountId);
@@ -94,6 +96,23 @@ public class LibraryController {
       AccountBook accountBook =
           libraryService.changeBookAccess(account.getId(), bookId, access);
       return ResponseEntity.ok(new AccountBookModel(accountBook));
+    } catch (NotFoundException e) {
+      return ResponseEntity.notFound().build();
+    } catch (ForbiddenException e) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+  }
+
+  @PutMapping("/books/{bookId}/status")
+  public ResponseEntity changeBookStatus(
+      @PathVariable Long bookId, @LoginUser Account account, @RequestBody String bookStatus) {
+    BookStatus status = BookStatus.valueOf(bookStatus);
+    try {
+      AccountBook accountBook =
+          libraryService.changeBookStatus(account.getId(), bookId, status);
+      return ResponseEntity.ok(new AccountBookModel(accountBook));
+    } catch (NotReviewedException e) {
+      return ResponseEntity.badRequest().body("not reviewed yet");
     } catch (NotFoundException e) {
       return ResponseEntity.notFound().build();
     } catch (ForbiddenException e) {

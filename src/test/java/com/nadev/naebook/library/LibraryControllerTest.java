@@ -267,4 +267,93 @@ class LibraryControllerTest {
     Assertions.assertThat(accountBook.getAccess()).isEqualTo(BookAccess.PRIVATE);
   }
 
+  @Test
+  @DisplayName("없는 book의 status를 변경 시")
+  void changeStatus_invalidBook() throws Exception {
+    mockMvc.perform(put(BASE_URL+"/books/-100/status")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(BookStatus.READING.name())
+    )
+        .andDo(print())
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  @DisplayName("다른 계정의 status를 변경 시")
+  void changeStatus_forbidden() throws Exception {
+    Account otherUser = Account.builder()
+        .role(Role.USER)
+        .name("otherUser")
+        .email("test@test.com")
+        .build();
+    Account savedAccount = accountRepository.save(otherUser);
+    AccountBook testBook = AccountBook.of("privateTest", savedAccount);
+    AccountBook saved = accountBookRepository.save(testBook);
+
+    mockMvc.perform(put(BASE_URL + "/books/" + saved.getId() + "/status")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(BookStatus.READING.name())
+    )
+        .andDo(print())
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  @DisplayName("리뷰를 하지 않고 COMPLETE로 status를 변경시")
+  void changeStatus_notReviewed() throws Exception {
+    AccountBook testBook = AccountBook.of("privateTest", testUser.getAccount());
+    AccountBook saved = accountBookRepository.save(testBook);
+
+    mockMvc.perform(put(BASE_URL+ "/books/" + saved.getId() + "/status")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(BookStatus.COMPLETE.name())
+    )
+        .andDo(print())
+        .andExpect(status().is4xxClientError());
+  }
+
+  @Test
+  @DisplayName("북킹에서 리딩으로 status 변경시")
+  void changeStatus_READING() throws Exception {
+    AccountBook testBook = AccountBook.of("privateTest", testUser.getAccount());
+    AccountBook saved = accountBookRepository.save(testBook);
+
+    mockMvc.perform(put(BASE_URL+ "/books/" + saved.getId() + "/status")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(BookStatus.READING.name())
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("isbn").value(saved.getIsbn()))
+        .andExpect(jsonPath("status").value(BookStatus.READING.name()));
+
+    AccountBook accountBook = accountBookRepository.findById(saved.getId()).orElseThrow();
+    Assertions.assertThat(accountBook.getStatus()).isEqualTo(BookStatus.READING);
+  }
+
+  @Test
+  @DisplayName("COMPLETE으로 status 변경시")
+  void changeStatus_COMPLETE() throws Exception {
+    AccountBook testBook = AccountBook.of("privateTest", testUser.getAccount());
+    AccountBook saved = accountBookRepository.save(testBook);
+
+    mockMvc.perform(put(BASE_URL+ "/books/" + saved.getId() + "/status")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(BookStatus.READING.name())
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("isbn").value(saved.getIsbn()))
+        .andExpect(jsonPath("status").value(BookStatus.READING.name()));
+
+    AccountBook accountBook = accountBookRepository.findById(saved.getId()).orElseThrow();
+    Assertions.assertThat(accountBook.getStatus()).isEqualTo(BookStatus.READING);
+  }
+
+
 }

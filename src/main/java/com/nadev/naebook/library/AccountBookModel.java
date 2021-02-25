@@ -42,6 +42,8 @@ public class AccountBookModel extends EntityModel<AccountBook> {
     add(linkTo(methodOn(LibraryController.class)
         .changeBooksAccess(id, accountBook.getAccount(), access.name()))
         .withRel("accountBook-changeAccess"));
-
+    add(linkTo(methodOn(LibraryController.class)
+        .changeBookStatus(id, accountBook.getAccount(), status.name()))
+        .withRel("accountBook-changeStatus"));
   }
 }
