@@ -5,10 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Tag {
 
   @Id
@@ -34,7 +36,4 @@ public class Tag {
     this.interest--;
   }
 
-  public String title() {
-    return title;
-  }
 }

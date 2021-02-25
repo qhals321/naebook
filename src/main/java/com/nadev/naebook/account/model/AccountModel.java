@@ -1,13 +1,15 @@
-package com.nadev.naebook.account;
+package com.nadev.naebook.account.model;
 
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import com.nadev.naebook.account.AccountController;
 import com.nadev.naebook.domain.Account;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
 @Getter @Setter
 public class AccountModel extends EntityModel<Account> {
@@ -24,7 +26,7 @@ public class AccountModel extends EntityModel<Account> {
     this.email = account.getEmail();
     this.picture = account.getPicture();
     this.bio = account.getBio();
-    add(linkTo(methodOn(AccountController.class).accountById(id)).withSelfRel());
+    add(WebMvcLinkBuilder.linkTo(methodOn(AccountController.class).accountById(id)).withSelfRel());
   }
 }
 

@@ -9,9 +9,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccountTag {
 
@@ -43,6 +45,6 @@ public class AccountTag {
   }
 
   public String tagTitle() {
-    return tag.title();
+    return tag.getTitle();
   }
 }
