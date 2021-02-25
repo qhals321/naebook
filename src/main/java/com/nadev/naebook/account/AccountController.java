@@ -6,10 +6,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import com.nadev.naebook.account.auth.LoginUser;
 import com.nadev.naebook.account.model.AccountModel;
 import com.nadev.naebook.account.model.AccountTagModel;
+import com.nadev.naebook.common.ResponseDto;
 import com.nadev.naebook.domain.Account;
 import com.nadev.naebook.domain.AccountTag;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -43,6 +47,17 @@ public class AccountController {
     return findAccountById(account.getId());
   }
 
+  private ResponseEntity<?> findAccountById(Long id) {
+    Optional<Account> foundAccount = accountRepository.findById(id);
+    if (foundAccount.isEmpty()) {
+      return ResponseEntity.notFound().build();
+    }
+    Account account = foundAccount.get();
+    AccountModel model = new AccountModel(account);
+    model.add(linkTo(methodOn(AccountController.class).accountById(id)).withRel("update-account"));
+    return ResponseEntity.ok(model);
+  }
+
   @PutMapping
   public ResponseEntity updateAccount(
       @LoginUser Account account,
@@ -72,7 +87,8 @@ public class AccountController {
     }
     AccountTag findAccountTag = accountTag.get();
     AccountTagModel model = new AccountTagModel(findAccountTag);
-    model.add(linkTo(methodOn(AccountController.class).findAccountTag(tagId)).withRel("remove-accountTag"));
+    model.add(linkTo(methodOn(AccountController.class).findAccountTag(tagId))
+        .withRel("remove-accountTag"));
     return ResponseEntity.ok(model);
   }
 
@@ -92,14 +108,26 @@ public class AccountController {
     return ResponseEntity.ok().build();
   }
 
-  private ResponseEntity<?> findAccountById(Long id) {
-    Optional<Account> foundAccount = accountRepository.findById(id);
-    if (foundAccount.isEmpty()) {
+  @GetMapping("/me/tags")
+  public ResponseEntity findLoginAccountTag(@LoginUser Account account) {
+    List<AccountTag> accountTags = accountTagRepository.findAllByAccount(account.getId());
+    Set<AccountTagModel> models = accountTags.stream()
+        .map(AccountTagModel::new)
+        .collect(Collectors.toSet());
+    return ResponseEntity.ok(new ResponseDto<>(models));
+  }
+
+  @GetMapping("/{accountId}/tags")
+  public ResponseEntity findAccountTagByAccountId(@PathVariable Long accountId) {
+    Optional<Account> account = accountRepository.findById(accountId);
+    if (account.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
-    Account account = foundAccount.get();
-    AccountModel model = new AccountModel(account);
-    model.add(linkTo(methodOn(AccountController.class).accountById(id)).withRel("update-account"));
-    return ResponseEntity.ok(model);
+
+    List<AccountTag> accountTag = accountTagRepository.findAllByAccount(accountId);
+    Set<AccountTagModel> models = accountTag.stream()
+        .map(AccountTagModel::new)
+        .collect(Collectors.toSet());
+    return ResponseEntity.ok(new ResponseDto<>(models));
   }
 }

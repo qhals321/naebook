@@ -146,7 +146,7 @@ class AccountControllerTest {
 
     String tagTitle = "newTitle";
 
-    mockMvc.perform(post(BASE_URL+"/tag")
+    mockMvc.perform(post(BASE_URL+"/tags")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
         .content(tagTitle)
@@ -213,4 +213,36 @@ class AccountControllerTest {
         accountTagRepository.findById(accountTag.getId()).isEmpty()).isTrue();
   }
 
+  @Test
+  @DisplayName("로그인 되어 있는 유저의 태그들을 가져오기")
+  void findAccountTags() throws Exception {
+    mockMvc.perform(get(BASE_URL+"/me/tags")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("data").isArray())
+    ;
+  }
+
+  @Test
+  @DisplayName("없는 유저의 태그들을 요청할 시")
+  void findAccountTagByAccountId_fail() throws Exception {
+    mockMvc.perform(get(BASE_URL+"/-100/tags")
+        .with(oauth2Login())
+    )
+        .andDo(print())
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  void findAccountTagByAccountId() throws Exception {
+    Long id = testUser.getAccount().getId();
+    mockMvc.perform(get(BASE_URL+"/"+ id + "/tags")
+        .with(oauth2Login())
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("data").isArray());
+  }
 }
