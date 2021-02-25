@@ -71,7 +71,7 @@ public class AccountController {
   }
 
   @PostMapping("/tags")
-  public ResponseEntity createAccountTag(@LoginUser Account account, @RequestBody String title) {
+  public ResponseEntity createAccountTag(@LoginUser Account account, String title) {
     AccountTag accountTag = accountService.createAccountTag(account.getId(), title);
     URI uri = linkTo(methodOn(AccountController.class)
         .findAccountTag(accountTag.getId()))
