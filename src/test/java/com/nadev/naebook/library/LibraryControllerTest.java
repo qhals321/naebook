@@ -13,6 +13,7 @@ import com.nadev.naebook.domain.Account;
 import com.nadev.naebook.domain.library.AccountBook;
 import com.nadev.naebook.domain.library.BookAccess;
 import com.nadev.naebook.domain.library.BookStatus;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -48,7 +50,7 @@ class LibraryControllerTest {
     AccountBook accountBook = AccountBook.of("123", testUser.getAccount());
     accountBookRepository.save(accountBook);
 
-    mockMvc.perform(post(BASE_URL + "/book")
+    mockMvc.perform(post(BASE_URL + "/books")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
         .content("123")
@@ -61,7 +63,7 @@ class LibraryControllerTest {
   void createAccountBook() throws Exception {
     String isbn = "123456";
     Long accountId = testUser.getAccount().getId();
-    mockMvc.perform(post(BASE_URL + "/book")
+    mockMvc.perform(post(BASE_URL + "/books")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
         .content(isbn)
@@ -80,7 +82,7 @@ class LibraryControllerTest {
   @Test
   @DisplayName("존재하지 않는 accountBook을 찾으려할 때")
   void findAccountBook_invalidId() throws Exception {
-    mockMvc.perform(get(BASE_URL + "/book/-100")
+    mockMvc.perform(get(BASE_URL + "/books/-100")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
     )
         .andDo(print())
@@ -100,7 +102,7 @@ class LibraryControllerTest {
     testBook.changeAccess(BookAccess.PRIVATE);
     AccountBook savedBook = accountBookRepository.save(testBook);
 
-    mockMvc.perform(get(BASE_URL + "/book/" + savedBook.getId())
+    mockMvc.perform(get(BASE_URL + "/books/" + savedBook.getId())
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
     )
         .andDo(print())
@@ -114,7 +116,7 @@ class LibraryControllerTest {
     testBook.changeAccess(BookAccess.PRIVATE);
     AccountBook savedBook = accountBookRepository.save(testBook);
 
-    mockMvc.perform(get(BASE_URL + "/book/" + savedBook.getId())
+    mockMvc.perform(get(BASE_URL + "/books/" + savedBook.getId())
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
     )
         .andDo(print())
@@ -132,7 +134,7 @@ class LibraryControllerTest {
     AccountBook testBook = AccountBook.of("test", testUser.getAccount());
     AccountBook savedBook = accountBookRepository.save(testBook);
 
-    mockMvc.perform(get(BASE_URL + "/book/" + savedBook.getId())
+    mockMvc.perform(get(BASE_URL + "/books/" + savedBook.getId())
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
     )
         .andDo(print())
@@ -144,4 +146,72 @@ class LibraryControllerTest {
         .andExpect(jsonPath("accountId").value(testUser.getAccount().getId()))
         .andExpect(jsonPath("_links.self").exists());
   }
+
+  @Test
+  @DisplayName("없는 계정의 라이브러리 책들을 요구")
+  void findAllBooksByAccount_invalidAccount() throws Exception {
+    mockMvc.perform(get(BASE_URL + "/-100/books")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+    )
+        .andDo(print())
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  @DisplayName("다른 계정의 라이브러리 책들 요구 시 private access로 되어 있는 것은 필터링")
+  void findAllBooksByAccount_withoutPrivate() throws Exception {
+    Account otherUser = Account.builder()
+        .role(Role.USER)
+        .name("otherUser")
+        .email("test@test.com")
+        .build();
+    Account savedAccount = accountRepository.save(otherUser);
+    AccountBook testBook = AccountBook.of("privateTest", savedAccount);
+    AccountBook test1 = AccountBook.of("test1", savedAccount);
+    AccountBook test2 = AccountBook.of("test2", savedAccount);
+    AccountBook test3 = AccountBook.of("test3", savedAccount);
+    AccountBook test4 = AccountBook.of("test4", savedAccount);
+    testBook.changeAccess(BookAccess.PRIVATE);
+    accountBookRepository.save(testBook);
+    accountBookRepository.save(test1);
+    accountBookRepository.save(test2);
+    accountBookRepository.save(test3);
+    accountBookRepository.save(test4);
+
+    mockMvc.perform(get(BASE_URL + "/" + savedAccount.getId() + "/books")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.data[*].isbn")
+            .value(Matchers.containsInAnyOrder(test1.getIsbn(), test2.getIsbn(),
+                test3.getIsbn(), test4.getIsbn())));
+  }
+
+  @Test
+  void findAllBooksByAccount() throws Exception {
+    Account account = testUser.getAccount();
+    AccountBook testBook = AccountBook.of("privateTest", account);
+    AccountBook test1 = AccountBook.of("test1", account);
+    AccountBook test2 = AccountBook.of("test2", account);
+    AccountBook test3 = AccountBook.of("test3", account);
+    AccountBook test4 = AccountBook.of("test4", account);
+    testBook.changeAccess(BookAccess.PRIVATE);
+    accountBookRepository.save(testBook);
+    accountBookRepository.save(test1);
+    accountBookRepository.save(test2);
+    accountBookRepository.save(test3);
+    accountBookRepository.save(test4);
+
+    mockMvc.perform(get(BASE_URL + "/" + account.getId() + "/books")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.data[*].isbn")
+            .value(Matchers.containsInAnyOrder(test1.getIsbn(), test2.getIsbn(),
+                test3.getIsbn(), test4.getIsbn(), testBook.getIsbn())));
+  }
+
+
 }
