@@ -2,7 +2,7 @@
   <div>
     <content-header />
     <div class="board">
-      <board :book-list.sync="bookList" book-status="BOOKING" />
+      <!--      <board :book-list.sync="bookList" book-status="BOOKING" />-->
     </div>
     <body-content />
     <footer id="footer"></footer>
