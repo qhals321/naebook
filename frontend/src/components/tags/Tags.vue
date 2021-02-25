@@ -1,5 +1,17 @@
 <template>
-  <div>태그 모음</div>
+  <div>
+    <div>
+      <ul>
+        <li>개발</li>
+        <li>인문학</li>
+      </ul>
+    </div>
+    <div>
+      <label>
+        <input type="text" />
+      </label>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
