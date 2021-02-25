@@ -60,7 +60,7 @@
       book: Book;
       dataTransfer: DataTransfer;
     }) {
-    	const MOVE = 'move'
+      const MOVE = 'move';
       dataTransfer.dropEffect = MOVE;
       dataTransfer.effectAllowed = MOVE;
       dataTransfer.setData('id', book.id.toString());
@@ -73,11 +73,17 @@
       bookStatus: BookReadingStatusType;
       dataTransfer: DataTransfer;
     }) {
+      if (bookStatus === 'COMPLETE' && !this.todoCheckReview()) return;
+
       const id = Number(dataTransfer.getData('id'));
       const book = this.bookListSync.find(book => book.id === id);
       if (book !== undefined) {
         book.status = bookStatus;
       }
+    }
+
+    private todoCheckReview(): boolean {
+      return confirm('리뷰를 남기셨나요?');
     }
   }
 </script>
