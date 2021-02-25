@@ -13,6 +13,7 @@ import com.nadev.naebook.domain.Account;
 import com.nadev.naebook.domain.library.AccountBook;
 import com.nadev.naebook.domain.library.BookAccess;
 import com.nadev.naebook.domain.library.BookStatus;
+import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -213,5 +214,57 @@ class LibraryControllerTest {
                 test3.getIsbn(), test4.getIsbn(), testBook.getIsbn())));
   }
 
+  @Test
+  @DisplayName("Book Access 변환 시 Book id 가 잘못될 경우")
+  void changeAccess_invalidId() throws Exception {
+    mockMvc.perform(put(BASE_URL + "/books/-100/access")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(BookAccess.PRIVATE.name())
+    )
+        .andDo(print())
+        .andExpect(status().isNotFound());
+
+  }
+
+  @Test
+  @DisplayName("Book Access 변환 시 남의 book을 변경")
+  void changeAccess_forbidden() throws Exception {
+    Account otherUser = Account.builder()
+        .role(Role.USER)
+        .name("otherUser")
+        .email("test@test.com")
+        .build();
+    Account savedAccount = accountRepository.save(otherUser);
+    AccountBook testBook = AccountBook.of("privateTest", savedAccount);
+    AccountBook saved = accountBookRepository.save(testBook);
+
+    mockMvc.perform(put(BASE_URL + "/books/" + saved.getId() + "/access")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(BookAccess.PRIVATE.name())
+    )
+        .andDo(print())
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  void changeAccess() throws Exception {
+    AccountBook testBook = AccountBook.of("privateTest", testUser.getAccount());
+    AccountBook saved = accountBookRepository.save(testBook);
+
+    mockMvc.perform(put(BASE_URL+ "/books/" + saved.getId() + "/access")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(BookAccess.PRIVATE.name())
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("isbn").value(saved.getIsbn()))
+        .andExpect(jsonPath("access").value(BookAccess.PRIVATE.name()));
+
+    AccountBook accountBook = accountBookRepository.findById(saved.getId()).orElseThrow();
+    Assertions.assertThat(accountBook.getAccess()).isEqualTo(BookAccess.PRIVATE);
+  }
 
 }

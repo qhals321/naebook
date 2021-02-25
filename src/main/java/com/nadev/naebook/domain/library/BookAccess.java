@@ -1,5 +1,5 @@
 package com.nadev.naebook.domain.library;
 
-public enum BookAccess {
+public enum BookAccess{
   PRIVATE, PUBLIC
 }
