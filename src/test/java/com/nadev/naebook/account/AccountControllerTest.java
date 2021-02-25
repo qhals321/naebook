@@ -31,9 +31,9 @@ import org.springframework.test.web.servlet.MockMvc;
 class AccountControllerTest {
 
   private static final String BASE_URL = "/api/account";
+
   @Autowired
   private MockMvc mockMvc;
-
   @Autowired
   private AccountRepository accountRepository;
   @Autowired
@@ -152,7 +152,8 @@ class AccountControllerTest {
         .content(tagTitle)
     )
         .andDo(print())
-        .andExpect(status().isCreated());
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("title").value(tagTitle));
 
     Tag tag = tagRepository.findByTitle(tagTitle).orElseThrow();
     Assertions.assertThat(tag.getTitle()).isEqualTo(tagTitle);

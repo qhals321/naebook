@@ -6,6 +6,7 @@ import com.nadev.naebook.domain.AccountTag;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ class AccountTagRepositoryTest {
   AccountTagRepository accountTagRepository;
   @Autowired
   TestUser testUser;
+
+  @AfterEach
+  void afterEach() {
+    testUser.deleteAll();
+  }
 
   @Test
   @DisplayName("accountTagRepository의 findAllByAccount()메서드의 페치조인이 잘 되는 지 확인")

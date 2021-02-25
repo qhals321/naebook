@@ -76,7 +76,7 @@ public class AccountController {
     URI uri = linkTo(methodOn(AccountController.class)
         .findAccountTag(accountTag.getId()))
         .withSelfRel().toUri();
-    return ResponseEntity.created(uri).build();
+    return ResponseEntity.created(uri).body(new AccountTagModel(accountTag));
   }
 
   @GetMapping("/tags/{tagId}")
