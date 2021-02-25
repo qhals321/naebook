@@ -60,8 +60,9 @@
       book: Book;
       dataTransfer: DataTransfer;
     }) {
-      dataTransfer.dropEffect = 'move';
-      dataTransfer.effectAllowed = 'move';
+    	const MOVE = 'move'
+      dataTransfer.dropEffect = MOVE;
+      dataTransfer.effectAllowed = MOVE;
       dataTransfer.setData('id', book.id.toString());
     }
 
