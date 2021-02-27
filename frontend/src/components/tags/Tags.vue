@@ -88,23 +88,35 @@
     private onKeyDown({ keyCode }: { keyCode: number }): void {
       switch (keyCode) {
         case KEY_CODE.UP:
-          if (this.focusOnCurrIdx === null) {
-            this.focusOnCurrIdx = 0;
-          } else if (this.focusOnCurrIdx > 0) {
-            this.focusOnCurrIdx--;
-          }
-          this.tag = this.matchedTagList[this.focusOnCurrIdx].title;
+          this.moveUp();
           break;
         case KEY_CODE.DOWN:
-          if (this.focusOnCurrIdx === null) {
-            this.focusOnCurrIdx = 0;
-          } else if (this.focusOnCurrIdx < this.matchedTagList.length - 1) {
-            this.focusOnCurrIdx++;
-          }
-          this.tag = this.matchedTagList[this.focusOnCurrIdx].title;
+          this.moveDown();
           break;
         case KEY_CODE.ENTER:
           this.resetCurrentFocusStyle();
+      }
+    }
+
+    private moveUp(): void {
+      if (this.focusOnCurrIdx === null) {
+        this.focusOnCurrIdx = 0;
+        return;
+      }
+      if (this.focusOnCurrIdx > 0) {
+        this.focusOnCurrIdx--;
+        this.tag = this.matchedTagList[this.focusOnCurrIdx].title;
+      }
+    }
+
+    private moveDown(): void {
+      if (this.focusOnCurrIdx === null) {
+        this.focusOnCurrIdx = 0;
+        return;
+      }
+      if (this.focusOnCurrIdx < this.matchedTagList.length - 1) {
+        this.focusOnCurrIdx++;
+        this.tag = this.matchedTagList[this.focusOnCurrIdx].title;
       }
     }
 
