@@ -21,6 +21,8 @@
 </template>
 
 <script lang="ts">
+  import { Tag } from '@/types/library';
+
   const tagList = [
     { id: 1, title: '개발' },
     { id: 2, title: '디자인' },
@@ -38,11 +40,9 @@
   import { Vue, Component, PropSync } from 'vue-property-decorator';
   @Component
   export default class Tags extends Vue {
-    @PropSync('accountsTagList') private accountsTagListSync!: {
-      id: number;
-      title: string;
-    }[];
+    @PropSync('accountsTagList') private accountsTagListSync!: Tag[];
     private tagList = tagList;
+    private matchedTagList: Tag[] = [];
     private tag = '';
 
     private onKeyPress({ target }: { target: HTMLInputElement }): void {
