@@ -2,6 +2,7 @@
   <div>
     <content-header />
     <div class="board">
+      <tags />
       <!--      <board :book-list.sync="bookList" book-status="BOOKING" />-->
     </div>
     <body-content />
@@ -14,6 +15,7 @@
   import ContentHeader from '@/views/main/header/TopContent.vue';
   import BodyContent from '@/views/main/body/BodyContent.vue';
   import Board, { Book } from '@/components/dragAndDrop/Board.vue';
+  import Tags from '@/components/tags/Tags.vue';
 
   const bookList: Book[] = [
     {
@@ -129,7 +131,7 @@
   ];
 
   @Component({
-    components: { Board, BodyContent, ContentHeader },
+    components: { Tags, Board, BodyContent, ContentHeader },
   })
   export default class App extends Vue {
     private bookList = [...bookList];
