@@ -2,7 +2,8 @@
   <div>
     <content-header />
     <div class="board">
-      <board :book-list.sync="bookList" book-status="BOOKING" />
+      <tags :accounts-tag-list.sync="accountsTagList" />
+      <!--      <board :book-list.sync="bookList" book-status="BOOKING" />-->
     </div>
     <body-content />
     <footer id="footer"></footer>
@@ -14,6 +15,13 @@
   import ContentHeader from '@/views/main/header/TopContent.vue';
   import BodyContent from '@/views/main/body/BodyContent.vue';
   import Board, { Book } from '@/components/dragAndDrop/Board.vue';
+  import Tags from '@/components/tags/Tags.vue';
+
+  const accountsTagList = [
+    { id: 1, title: '개발' },
+    { id: 2, title: '디자인' },
+    { id: 3, title: '인문' },
+  ];
 
   const bookList: Book[] = [
     {
@@ -129,9 +137,10 @@
   ];
 
   @Component({
-    components: { Board, BodyContent, ContentHeader },
+    components: { Tags, Board, BodyContent, ContentHeader },
   })
   export default class App extends Vue {
     private bookList = [...bookList];
+    private accountsTagList = accountsTagList;
   }
 </script>
