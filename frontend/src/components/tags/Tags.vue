@@ -50,6 +50,12 @@
     { id: 11, title: '람사사사사' },
   ];
 
+  const KEY_CODE = {
+    UP: 38,
+    DOWN: 40,
+    ENTER: 13,
+  } as const;
+
   import { Vue, Component, PropSync } from 'vue-property-decorator';
   import { HTMLTargetType } from '@/types/common';
   @Component
@@ -81,7 +87,7 @@
     private focusOnCurrIdx: number | null = null;
     private onKeyDown({ keyCode }: { keyCode: number }): void {
       switch (keyCode) {
-        case 38:
+        case KEY_CODE.UP:
           if (this.focusOnCurrIdx === null) {
             this.focusOnCurrIdx = 0;
           } else if (this.focusOnCurrIdx > 0) {
@@ -89,7 +95,7 @@
           }
           this.tag = this.matchedTagList[this.focusOnCurrIdx].title;
           break;
-        case 40:
+        case KEY_CODE.DOWN:
           if (this.focusOnCurrIdx === null) {
             this.focusOnCurrIdx = 0;
           } else if (this.focusOnCurrIdx < this.matchedTagList.length - 1) {
@@ -97,12 +103,12 @@
           }
           this.tag = this.matchedTagList[this.focusOnCurrIdx].title;
           break;
-        case 13:
+        case KEY_CODE.ENTER:
           this.resetCurrentFocusStyle();
       }
     }
 
-    private onKeypressEnter({ target }: HTMLTargetType): void {
+    private onKeypressEnter({ target }: { target: HTMLInputElement }): void {
       this.setAccountsTagList(target.value);
     }
 
