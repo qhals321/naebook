@@ -45,6 +45,7 @@
   ];
 
   import { Vue, Component, PropSync } from 'vue-property-decorator';
+  import { HTMLTargetType } from '@/types/common';
   @Component
   export default class Tags extends Vue {
     @PropSync('accountsTagList') private accountsTagListSync!: Tag[];
@@ -52,7 +53,7 @@
     private matchedTagList: Tag[] = [];
     private tag = '';
 
-    private onInput({ target }: { target: HTMLInputElement }): void {
+    private onInput({ target }: HTMLTargetType): void {
       if (target.value === '') {
         this.resetInsertedTags();
         return;
@@ -71,7 +72,7 @@
       return filtered.length > 0 ? filtered : [];
     }
 
-    private onKeypressEnter({ target }: { target: HTMLInputElement }): void {
+    private onKeypressEnter({ target }: HTMLTargetType): void {
       this.setAccountsTagList(target.value);
     }
 
