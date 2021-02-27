@@ -40,6 +40,12 @@ public class LibraryService {
     return accountBook;
   }
 
+  @Transactional
+  public void delete(Long accountId, Long bookId) {
+    AccountBook accountBook = validateAccountBook(accountId, bookId);
+    accountBookRepository.delete(accountBook);
+  }
+
   private AccountBook validateAccountBook(Long accountId, Long bookId) {
     AccountBook accountBook =
         accountBookRepository.findById(bookId)

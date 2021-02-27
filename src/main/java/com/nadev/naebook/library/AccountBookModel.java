@@ -43,6 +43,9 @@ public class AccountBookModel extends EntityModel<AccountBook> {
         .findBook(id, accountBook.getAccount()))
         .withSelfRel());
     add(linkTo(methodOn(LibraryController.class)
+        .deleteBook(accountBook.getAccount(), id))
+        .withRel("accountBook-delete"));
+    add(linkTo(methodOn(LibraryController.class)
         .changeBooksAccess(id, accountBook.getAccount(), new AccessRequestDto(access)))
         .withRel("accountBook-changeAccess"));
     add(linkTo(methodOn(LibraryController.class)

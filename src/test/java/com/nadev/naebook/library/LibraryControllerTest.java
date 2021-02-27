@@ -19,6 +19,7 @@ import com.nadev.naebook.library.dto.AccessRequestDto;
 import com.nadev.naebook.library.dto.BookRequestDto;
 import com.nadev.naebook.library.dto.ReviewRequestDto;
 import com.nadev.naebook.library.dto.StatusRequestDto;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -412,6 +413,46 @@ class LibraryControllerTest {
 
     AccountBook book = accountBookRepository.findById(saved.getId()).orElseThrow();
     Assertions.assertThat(book.isReviewed()).isTrue();
+  }
+
+  @Test
+  @DisplayName("없는 북 삭제시")
+  void bookDelete_notFound() throws Exception {
+    mockMvc.perform(delete(BASE_URL+"/books/-100")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+    )
+        .andDo(print())
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  @DisplayName("남의 북을 삭제시")
+  void bookDelete_forbidden() throws Exception {
+    Account account = otherAccount();
+    Account saved = accountRepository.save(account);
+    AccountBook accountBook = AccountBook.of("1234", saved);
+    AccountBook savedBook = accountBookRepository.save(accountBook);
+
+    mockMvc.perform(delete(BASE_URL+"/books/"+savedBook.getId())
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+    )
+        .andDo(print())
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  @DisplayName("북 삭제 성공")
+  void bookDelete_success() throws Exception {
+    AccountBook accountBook = AccountBook.of("1234", testUser.getAccount());
+    AccountBook saved = accountBookRepository.save(accountBook);
+    mockMvc.perform(delete(BASE_URL+"/books/"+saved.getId())
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+    )
+        .andDo(print())
+        .andExpect(status().isOk());
+
+    Optional<AccountBook> byId = accountBookRepository.findById(saved.getId());
+    Assertions.assertThat(byId.isEmpty()).isTrue();
   }
 
   private Account otherAccount() {
