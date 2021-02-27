@@ -16,6 +16,7 @@
           v-model="tag"
           @input="onInput"
           @keypress.enter="onKeypressEnter"
+          @keydown="onKeyDown"
         />
       </label>
       <ul v-if="matchedTagList.length > 0">
@@ -70,6 +71,30 @@
       const filtered = this.tagList.filter(tag => tag.title.includes(title));
 
       return filtered.length > 0 ? filtered : [];
+    }
+
+    private focusOnCurrIdx: number | null = null;
+    private onKeyDown({ keyCode }: { keyCode: number }): void {
+      switch (keyCode) {
+        case 38:
+          if (this.focusOnCurrIdx === null) {
+            this.focusOnCurrIdx = 0;
+          } else if (this.focusOnCurrIdx > 0) {
+            this.focusOnCurrIdx--;
+          }
+          this.tag = this.matchedTagList[this.focusOnCurrIdx].title;
+          break;
+        case 40:
+          if (this.focusOnCurrIdx === null) {
+            this.focusOnCurrIdx = 0;
+          } else if (this.focusOnCurrIdx < this.matchedTagList.length - 1) {
+            this.focusOnCurrIdx++;
+          }
+          this.tag = this.matchedTagList[this.focusOnCurrIdx].title;
+          break;
+        case 13:
+          console.log(this.tag);
+      }
     }
 
     private onKeypressEnter({ target }: HTMLTargetType): void {
