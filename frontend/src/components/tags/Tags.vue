@@ -24,12 +24,24 @@
   const tagList = [
     { id: 1, title: '개발' },
     { id: 2, title: '디자인' },
-    { id: 3, title: '인문학' },
+    { id: 3, title: '테마여행' },
+    { id: 4, title: '잡지' },
+    { id: 5, title: '인문' },
+    { id: 6, title: '사회' },
+    { id: 7, title: '자연' },
+    { id: 8, title: '사랑' },
+    { id: 9, title: '사람' },
+    { id: 10, title: '사탕' },
+    { id: 11, title: '람사사사사' },
   ];
 
-  import { Vue, Component } from 'vue-property-decorator';
+  import { Vue, Component, PropSync } from 'vue-property-decorator';
   @Component
   export default class Tags extends Vue {
+    @PropSync('accountsTagList') private accountsTagListSync!: {
+      id: number;
+      title: string;
+    }[];
     private tagList = tagList;
     private tag = '';
 
