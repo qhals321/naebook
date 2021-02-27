@@ -113,7 +113,7 @@
 
     private setAccountsTagList(title: string): void {
       if (!this.isDuplicate(title)) {
-        this.accountsTagListSync.puth({
+        this.accountsTagListSync.push({
           id: this.accountsTagListSync.length + 1,
           title,
         });
