@@ -7,6 +7,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nadev.naebook.domain.library.AccountBook;
 import com.nadev.naebook.domain.library.BookAccess;
 import com.nadev.naebook.domain.library.BookStatus;
+import com.nadev.naebook.library.dto.AccessRequestDto;
+import com.nadev.naebook.library.dto.ReviewRequestDto;
+import com.nadev.naebook.library.dto.StatusRequestDto;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.EntityModel;
@@ -40,10 +43,14 @@ public class AccountBookModel extends EntityModel<AccountBook> {
         .findBook(id, accountBook.getAccount()))
         .withSelfRel());
     add(linkTo(methodOn(LibraryController.class)
-        .changeBooksAccess(id, accountBook.getAccount(), access.name()))
+        .changeBooksAccess(id, accountBook.getAccount(), new AccessRequestDto(access)))
         .withRel("accountBook-changeAccess"));
     add(linkTo(methodOn(LibraryController.class)
-        .changeBookStatus(id, accountBook.getAccount(), status.name()))
+        .changeBookStatus(id, accountBook.getAccount(), new StatusRequestDto(status)))
         .withRel("accountBook-changeStatus"));
+    add(linkTo(methodOn(LibraryController.class)
+        .writeReview(id, accountBook.getAccount(), new ReviewRequestDto(), null))
+        .withRel("accountBook-review")
+    );
   }
 }

@@ -16,13 +16,20 @@ import com.nadev.naebook.domain.library.BookStatus;
 import com.nadev.naebook.exception.ForbiddenException;
 import com.nadev.naebook.exception.NotFoundException;
 import com.nadev.naebook.exception.NotReviewedException;
+import com.nadev.naebook.library.dto.AccessRequestDto;
+import com.nadev.naebook.library.dto.BookRequestDto;
+import com.nadev.naebook.library.dto.ReviewRequestDto;
+import com.nadev.naebook.library.dto.StatusRequestDto;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,15 +46,16 @@ public class LibraryController {
   private final AccountBookRepository accountBookRepository;
   private final AccountRepository accountRepository;
   private final LibraryService libraryService;
-  private final ObjectMapper objectMapper;
 
   @PostMapping("/books")
-  public ResponseEntity booking(@LoginUser Account account, @RequestBody String isbn) {
-    boolean present = accountBookRepository.findWithAccountIsbn(account.getId(), isbn).isPresent();
+  public ResponseEntity booking(@LoginUser Account account,
+      @RequestBody BookRequestDto requestDto) {
+    boolean present = accountBookRepository.findWithAccountIsbn(account.getId(),
+        requestDto.getIsbn()).isPresent();
     if (present) {
       return ResponseEntity.badRequest().body("already exists");
     }
-    AccountBook accountBook = AccountBook.of(isbn, account);
+    AccountBook accountBook = AccountBook.of(requestDto.getIsbn(), account);
     AccountBook saved = accountBookRepository.save(accountBook);
     URI uri = linkTo(methodOn(LibraryController.class)
         .findBook(saved.getId(), account)).withSelfRel()
@@ -90,8 +98,9 @@ public class LibraryController {
 
   @PutMapping("/books/{bookId}/access")
   public ResponseEntity changeBooksAccess(
-      @PathVariable Long bookId, @LoginUser Account account, @RequestBody String bookAccess) {
-    BookAccess access = BookAccess.valueOf(bookAccess);
+      @PathVariable Long bookId, @LoginUser Account account,
+      @RequestBody AccessRequestDto requestDto) {
+    BookAccess access = requestDto.getAccess();
     try {
       AccountBook accountBook =
           libraryService.changeBookAccess(account.getId(), bookId, access);
@@ -105,9 +114,10 @@ public class LibraryController {
 
   @PutMapping("/books/{bookId}/status")
   public ResponseEntity changeBookStatus(
-      @PathVariable Long bookId, @LoginUser Account account, @RequestBody String bookStatus) {
-    BookStatus status = BookStatus.valueOf(bookStatus);
+      @PathVariable Long bookId, @LoginUser Account account,
+      @RequestBody StatusRequestDto requestDto) {
     try {
+      BookStatus status = requestDto.getStatus();
       AccountBook accountBook =
           libraryService.changeBookStatus(account.getId(), bookId, status);
       return ResponseEntity.ok(new AccountBookModel(accountBook));
@@ -117,6 +127,26 @@ public class LibraryController {
       return ResponseEntity.notFound().build();
     } catch (ForbiddenException e) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+  }
+
+  @PutMapping("/books/{bookId}/review")
+  public ResponseEntity writeReview(
+      @PathVariable Long bookId,
+      @LoginUser Account account,
+      @RequestBody @Valid ReviewRequestDto requestDto,
+      BindingResult errors) {
+    if (errors.hasErrors()) {
+      return ResponseEntity.badRequest().body(errors);
+    }
+    try {
+      AccountBook reviewedBook = libraryService
+          .review(account.getId(), bookId, requestDto.getScore(), requestDto.getReview());
+      return ResponseEntity.ok().body(new AccountBookModel(reviewedBook));
+    } catch (ForbiddenException e) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    } catch (NotFoundException e) {
+      return ResponseEntity.notFound().build();
     }
   }
 

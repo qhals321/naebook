@@ -4,6 +4,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.nadev.naebook.account.auth.LoginUser;
+import com.nadev.naebook.account.dto.AccountRequestDto;
+import com.nadev.naebook.account.dto.TagRequestDto;
 import com.nadev.naebook.account.model.AccountModel;
 import com.nadev.naebook.account.model.AccountTagModel;
 import com.nadev.naebook.common.ResponseDto;
@@ -71,8 +73,8 @@ public class AccountController {
   }
 
   @PostMapping("/tags")
-  public ResponseEntity createAccountTag(@LoginUser Account account, String title) {
-    AccountTag accountTag = accountService.createAccountTag(account.getId(), title);
+  public ResponseEntity createAccountTag(@LoginUser Account account, @RequestBody TagRequestDto requestDto) {
+    AccountTag accountTag = accountService.createAccountTag(account.getId(), requestDto.getTitle());
     URI uri = linkTo(methodOn(AccountController.class)
         .findAccountTag(accountTag.getId()))
         .withSelfRel().toUri();

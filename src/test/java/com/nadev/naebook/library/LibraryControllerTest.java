@@ -6,13 +6,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nadev.naebook.account.AccountRepository;
+import com.nadev.naebook.account.AccountService;
 import com.nadev.naebook.account.TestUser;
 import com.nadev.naebook.account.auth.Role;
 import com.nadev.naebook.domain.Account;
 import com.nadev.naebook.domain.library.AccountBook;
 import com.nadev.naebook.domain.library.BookAccess;
 import com.nadev.naebook.domain.library.BookStatus;
+import com.nadev.naebook.library.dto.AccessRequestDto;
+import com.nadev.naebook.library.dto.BookRequestDto;
+import com.nadev.naebook.library.dto.ReviewRequestDto;
+import com.nadev.naebook.library.dto.StatusRequestDto;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -39,6 +45,10 @@ class LibraryControllerTest {
   private AccountBookRepository accountBookRepository;
   @Autowired
   private AccountRepository accountRepository;
+  @Autowired
+  private LibraryService libraryService;
+  @Autowired
+  private ObjectMapper objectMapper;
 
   @AfterEach
   private void afterEach() {
@@ -62,22 +72,22 @@ class LibraryControllerTest {
 
   @Test
   void createAccountBook() throws Exception {
-    String isbn = "123456";
+    BookRequestDto requestDto = new BookRequestDto("123456");
     Long accountId = testUser.getAccount().getId();
     mockMvc.perform(post(BASE_URL + "/books")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(isbn)
+        .content(objectMapper.writeValueAsString(requestDto))
     )
         .andDo(print())
         .andExpect(status().isCreated())
         .andExpect(jsonPath("access").value(BookAccess.PUBLIC.name()))
         .andExpect(jsonPath("status").value(BookStatus.BOOKING.name()))
         .andExpect(jsonPath("reviewed").value(false))
-        .andExpect(jsonPath("isbn").value(isbn))
+        .andExpect(jsonPath("isbn").value(requestDto.getIsbn()))
         .andExpect(jsonPath("accountId").value(accountId));
 
-    accountBookRepository.findWithAccountIsbn(accountId, isbn).orElseThrow();
+    accountBookRepository.findWithAccountIsbn(accountId, requestDto.getIsbn()).orElseThrow();
   }
 
   @Test
@@ -93,11 +103,7 @@ class LibraryControllerTest {
   @Test
   @DisplayName("다른 유저의 private account book에 접근할 때")
   void findAccountBook_private() throws Exception {
-    Account otherUser = Account.builder()
-        .role(Role.USER)
-        .name("otherUser")
-        .email("test@test.com")
-        .build();
+    Account otherUser = otherAccount();
     Account savedAccount = accountRepository.save(otherUser);
     AccountBook testBook = AccountBook.of("test", savedAccount);
     testBook.changeAccess(BookAccess.PRIVATE);
@@ -161,11 +167,7 @@ class LibraryControllerTest {
   @Test
   @DisplayName("다른 계정의 라이브러리 책들 요구 시 private access로 되어 있는 것은 필터링")
   void findAllBooksByAccount_withoutPrivate() throws Exception {
-    Account otherUser = Account.builder()
-        .role(Role.USER)
-        .name("otherUser")
-        .email("test@test.com")
-        .build();
+    Account otherUser = otherAccount();
     Account savedAccount = accountRepository.save(otherUser);
     AccountBook testBook = AccountBook.of("privateTest", savedAccount);
     AccountBook test1 = AccountBook.of("test1", savedAccount);
@@ -220,7 +222,7 @@ class LibraryControllerTest {
     mockMvc.perform(put(BASE_URL + "/books/-100/access")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(BookAccess.PRIVATE.name())
+        .content(objectMapper.writeValueAsString(new AccessRequestDto(BookAccess.PRIVATE)))
     )
         .andDo(print())
         .andExpect(status().isNotFound());
@@ -230,11 +232,7 @@ class LibraryControllerTest {
   @Test
   @DisplayName("Book Access 변환 시 남의 book을 변경")
   void changeAccess_forbidden() throws Exception {
-    Account otherUser = Account.builder()
-        .role(Role.USER)
-        .name("otherUser")
-        .email("test@test.com")
-        .build();
+    Account otherUser = otherAccount();
     Account savedAccount = accountRepository.save(otherUser);
     AccountBook testBook = AccountBook.of("privateTest", savedAccount);
     AccountBook saved = accountBookRepository.save(testBook);
@@ -242,7 +240,7 @@ class LibraryControllerTest {
     mockMvc.perform(put(BASE_URL + "/books/" + saved.getId() + "/access")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(BookAccess.PRIVATE.name())
+        .content(objectMapper.writeValueAsString(new AccessRequestDto(BookAccess.PRIVATE)))
     )
         .andDo(print())
         .andExpect(status().isForbidden());
@@ -256,7 +254,7 @@ class LibraryControllerTest {
     mockMvc.perform(put(BASE_URL+ "/books/" + saved.getId() + "/access")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(BookAccess.PRIVATE.name())
+        .content(objectMapper.writeValueAsString(new AccessRequestDto(BookAccess.PRIVATE)))
     )
         .andDo(print())
         .andExpect(status().isOk())
@@ -273,7 +271,7 @@ class LibraryControllerTest {
     mockMvc.perform(put(BASE_URL+"/books/-100/status")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(BookStatus.READING.name())
+        .content(objectMapper.writeValueAsString(new StatusRequestDto(BookStatus.READING)))
     )
         .andDo(print())
         .andExpect(status().isNotFound());
@@ -282,11 +280,7 @@ class LibraryControllerTest {
   @Test
   @DisplayName("다른 계정의 status를 변경 시")
   void changeStatus_forbidden() throws Exception {
-    Account otherUser = Account.builder()
-        .role(Role.USER)
-        .name("otherUser")
-        .email("test@test.com")
-        .build();
+    Account otherUser = otherAccount();
     Account savedAccount = accountRepository.save(otherUser);
     AccountBook testBook = AccountBook.of("privateTest", savedAccount);
     AccountBook saved = accountBookRepository.save(testBook);
@@ -294,7 +288,7 @@ class LibraryControllerTest {
     mockMvc.perform(put(BASE_URL + "/books/" + saved.getId() + "/status")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(BookStatus.READING.name())
+        .content(objectMapper.writeValueAsString(new StatusRequestDto(BookStatus.READING)))
     )
         .andDo(print())
         .andExpect(status().isForbidden());
@@ -309,7 +303,7 @@ class LibraryControllerTest {
     mockMvc.perform(put(BASE_URL+ "/books/" + saved.getId() + "/status")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(BookStatus.COMPLETE.name())
+        .content(objectMapper.writeValueAsString(new StatusRequestDto(BookStatus.COMPLETE)))
     )
         .andDo(print())
         .andExpect(status().is4xxClientError());
@@ -324,7 +318,7 @@ class LibraryControllerTest {
     mockMvc.perform(put(BASE_URL+ "/books/" + saved.getId() + "/status")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(BookStatus.READING.name())
+        .content(objectMapper.writeValueAsString(new StatusRequestDto(BookStatus.READING)))
     )
         .andDo(print())
         .andExpect(status().isOk())
@@ -338,22 +332,93 @@ class LibraryControllerTest {
   @Test
   @DisplayName("COMPLETE으로 status 변경시")
   void changeStatus_COMPLETE() throws Exception {
-    AccountBook testBook = AccountBook.of("privateTest", testUser.getAccount());
+    Account currentAccount = testUser.getAccount();
+    AccountBook testBook = AccountBook.of("privateTest", currentAccount);
     AccountBook saved = accountBookRepository.save(testBook);
+    libraryService.review(currentAccount.getId(), saved.getId(), 2F, "good");
 
     mockMvc.perform(put(BASE_URL+ "/books/" + saved.getId() + "/status")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(BookStatus.READING.name())
+        .content(objectMapper.writeValueAsString(new StatusRequestDto(BookStatus.COMPLETE)))
     )
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("isbn").value(saved.getIsbn()))
-        .andExpect(jsonPath("status").value(BookStatus.READING.name()));
+        .andExpect(jsonPath("status").value(BookStatus.COMPLETE.name()));
 
     AccountBook accountBook = accountBookRepository.findById(saved.getId()).orElseThrow();
-    Assertions.assertThat(accountBook.getStatus()).isEqualTo(BookStatus.READING);
+    Assertions.assertThat(accountBook.getStatus()).isEqualTo(BookStatus.COMPLETE);
   }
 
+  @Test
+  @DisplayName("남의 북에 리뷰를 남길 시")
+  void bookReview_forbidden() throws Exception {
+    Account account = otherAccount();
+    Account saved = accountRepository.save(account);
+    AccountBook accountBook = AccountBook.of("1234", saved);
+    AccountBook savedBook = accountBookRepository.save(accountBook);
 
+    mockMvc.perform(put(BASE_URL+"/books/"+savedBook.getId()+"/review")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(new ReviewRequestDto(3F, "good")))
+    )
+        .andDo(print())
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  @DisplayName("없는 북 리뷰를 남길 시")
+  void bookReview_notFound() throws Exception {
+    mockMvc.perform(put(BASE_URL+"/books/-100/review")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(new ReviewRequestDto(3F,"good")))
+    )
+        .andDo(print())
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  @DisplayName("점수를 안 남길 시")
+  void bookReview_emptyScore() throws Exception {
+
+    AccountBook accountBook = AccountBook.of("123", testUser.getAccount());
+    AccountBook saved = accountBookRepository.save(accountBook);
+    mockMvc.perform(put(BASE_URL+"/books/" + saved.getId() + "/review")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(new ReviewRequestDto(null, "good")))
+    )
+        .andDo(print())
+        .andExpect(status().is4xxClientError());
+  }
+
+  @Test
+  @DisplayName("점수만 남길 시 리뷰 성공")
+  void bookReview_success() throws Exception {
+    AccountBook accountBook = AccountBook.of("123", testUser.getAccount());
+    AccountBook saved = accountBookRepository.save(accountBook);
+    mockMvc.perform(put(BASE_URL+"/books/" + saved.getId() + "/review")
+        .with(oauth2Login().oauth2User(testUser.getAuth2User()))
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(new ReviewRequestDto(2F, null)))
+    )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("score").value(2F))
+        .andExpect(jsonPath("review").isEmpty());
+
+    AccountBook book = accountBookRepository.findById(saved.getId()).orElseThrow();
+    Assertions.assertThat(book.isReviewed()).isTrue();
+  }
+
+  private Account otherAccount() {
+    return Account.builder()
+        .role(Role.USER)
+        .name("otherUser")
+        .email("test@test.com")
+        .build();
+  }
 }

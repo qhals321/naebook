@@ -33,6 +33,13 @@ public class LibraryService {
     return accountBook;
   }
 
+  @Transactional
+  public AccountBook review(Long accountId, Long bookId, Float score, String content) {
+    AccountBook accountBook = validateAccountBook(accountId, bookId);
+    accountBook.review(score, content);
+    return accountBook;
+  }
+
   private AccountBook validateAccountBook(Long accountId, Long bookId) {
     AccountBook accountBook =
         accountBookRepository.findById(bookId)
