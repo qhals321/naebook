@@ -32,8 +32,14 @@
   export default class Tags extends Vue {
     private tagList = tagList;
     private tag = '';
-
-    
+	
+	  private onKeyPress({ target }: { target: HTMLInputElement }): void {
+		  this.tagList.push({
+			  id: this.tagList.length + 1,
+			  title: target.value,
+		  });
+		  this.tag = '';
+	  }
   }
 </script>
 
