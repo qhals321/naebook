@@ -10,10 +10,11 @@
     <div>
       <label>
         <input
+          ref="inputRef"
           type="text"
           placeholder="tag 입력 창"
           v-model="tag"
-          @keypress.enter="onKeyPress"
+          @keypress.enter="onKeypressEnter"
         />
       </label>
     </div>
@@ -45,18 +46,27 @@
     private matchedTagList: Tag[] = [];
     private tag = '';
 
-    private onKeyPress({ target }: { target: HTMLInputElement }): void {
-      if (!this.isDuplicate(target.value)) {
-        this.tagList.push({
-          id: this.tagList.length + 1,
-          title: target.value,
+    private onKeypressEnter({ target }: { target: HTMLInputElement }): void {
+      this.setAccountsTagList(target.value);
+    }
+
+    private setAccountsTagList(title: string): void {
+      if (!this.isDuplicate(title)) {
+        this.accountsTagListSync.puth({
+          id: this.accountsTagListSync.length + 1,
+          title,
         });
       }
-      this.tag = '';
+      this.resetInsertedTags();
     }
 
     private isDuplicate(title: string): boolean {
       return this.tagList.some(tag => tag.title === title);
+    }
+
+    private resetInsertedTags(): void {
+      this.tag = '';
+      this.matchedTagList = [];
     }
   }
 </script>
