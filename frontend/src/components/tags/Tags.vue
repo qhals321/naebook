@@ -26,6 +26,7 @@
           :class="{ focus: idx === focusOnCurrIdx }"
           @keypress.enter="onMatchedTagPress(tag.title)"
           @mouseover="focusOnCurrIdx = idx"
+          @click="onMatchedTagPress(tag.title)"
         >
           {{ tag.title }}
         </li>
