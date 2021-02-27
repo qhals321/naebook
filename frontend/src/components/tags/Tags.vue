@@ -20,7 +20,11 @@
         />
       </label>
       <ul v-if="matchedTagList.length > 0">
-        <li v-for="tag in matchedTagList" :key="tag.id">
+        <li
+          v-for="(tag, idx) in matchedTagList"
+          :key="tag.id"
+          :class="{ focus: idx === focusOnCurrIdx }"
+        >
           {{ tag.title }}
         </li>
       </ul>
@@ -122,4 +126,8 @@
   }
 </script>
 
-<style scoped></style>
+<style scoped>
+  .focus {
+    background-color: red;
+  }
+</style>
