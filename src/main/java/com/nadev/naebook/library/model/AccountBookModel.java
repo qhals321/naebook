@@ -1,4 +1,4 @@
-package com.nadev.naebook.library;
+package com.nadev.naebook.library.model;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -7,12 +7,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nadev.naebook.domain.library.AccountBook;
 import com.nadev.naebook.domain.library.BookAccess;
 import com.nadev.naebook.domain.library.BookStatus;
+import com.nadev.naebook.library.LibraryController;
 import com.nadev.naebook.library.dto.AccessRequestDto;
 import com.nadev.naebook.library.dto.ReviewRequestDto;
 import com.nadev.naebook.library.dto.StatusRequestDto;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
 @Getter
 @Setter
@@ -39,7 +41,7 @@ public class AccountBookModel extends EntityModel<AccountBook> {
     this.category = accountBook.getCategory();
     this.score = accountBook.getScore();
     this.reviewed = accountBook.isReviewed();
-    add(linkTo(methodOn(LibraryController.class)
+    add(WebMvcLinkBuilder.linkTo(methodOn(LibraryController.class)
         .findBook(id, accountBook.getAccount()))
         .withSelfRel());
     add(linkTo(methodOn(LibraryController.class)
