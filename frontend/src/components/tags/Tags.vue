@@ -2,7 +2,7 @@
   <div>
     <div>
       <ul>
-        <li v-for="tag in tagList" :key="tag.id">
+        <li v-for="tag in accountsTagListSync" :key="tag.id">
           {{ tag.title }}
         </li>
       </ul>
@@ -14,9 +14,15 @@
           type="text"
           placeholder="tag 입력 창"
           v-model="tag"
+          @input="onInput"
           @keypress.enter="onKeypressEnter"
         />
       </label>
+      <ul v-if="matchedTagList.length > 0">
+        <li v-for="tag in matchedTagList" :key="tag.id">
+          {{ tag.title }}
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -45,6 +51,19 @@
     private tagList = tagList;
     private matchedTagList: Tag[] = [];
     private tag = '';
+
+    private onInput({ target }: { target: HTMLInputElement }): void {
+      if (target.value === '') {
+        this.resetInsertedTags();
+        return;
+      }
+
+      const filtered = this.tagList.filter(tag =>
+        tag.title.includes(target.value)
+      );
+
+      this.matchedTagList = filtered.length > 0 ? filtered : [];
+    }
 
     private onKeypressEnter({ target }: { target: HTMLInputElement }): void {
       this.setAccountsTagList(target.value);
