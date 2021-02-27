@@ -58,11 +58,17 @@
         return;
       }
 
-      const filtered = this.tagList.filter(tag =>
-        tag.title.includes(target.value)
-      );
+      this.setMatchedTagList(target.value);
+    }
 
-      this.matchedTagList = filtered.length > 0 ? filtered : [];
+    private setMatchedTagList(title: string): void {
+      this.matchedTagList = this.getFilteredTags(title);
+    }
+
+    private getFilteredTags(title: string): Tag[] {
+      const filtered = this.tagList.filter(tag => tag.title.includes(title));
+
+      return filtered.length > 0 ? filtered : [];
     }
 
     private onKeypressEnter({ target }: { target: HTMLInputElement }): void {
