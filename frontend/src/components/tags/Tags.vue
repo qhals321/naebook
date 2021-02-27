@@ -24,6 +24,7 @@
           v-for="(tag, idx) in matchedTagList"
           :key="tag.id"
           :class="{ focus: idx === focusOnCurrIdx }"
+          @keypress.enter="onMatchedTagPress(tag.title)"
         >
           {{ tag.title }}
         </li>
@@ -97,12 +98,17 @@
           this.tag = this.matchedTagList[this.focusOnCurrIdx].title;
           break;
         case 13:
-          console.log(this.tag);
+          this.resetCurrentFocusStyle();
       }
     }
 
     private onKeypressEnter({ target }: HTMLTargetType): void {
       this.setAccountsTagList(target.value);
+    }
+
+    private onMatchedTagPress(title: string): void {
+      this.setAccountsTagList(title);
+      this.resetCurrentFocusStyle();
     }
 
     private setAccountsTagList(title: string): void {
@@ -122,6 +128,10 @@
     private resetInsertedTags(): void {
       this.tag = '';
       this.matchedTagList = [];
+    }
+
+    private resetCurrentFocusStyle(): void {
+      this.focusOnCurrIdx = null;
     }
   }
 </script>
