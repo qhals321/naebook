@@ -122,7 +122,7 @@
     }
 
     private isDuplicate(title: string): boolean {
-      return this.tagList.some(tag => tag.title === title);
+      return this.accountsTagListSync.some(tag => tag.title === title);
     }
 
     private resetInsertedTags(): void {
