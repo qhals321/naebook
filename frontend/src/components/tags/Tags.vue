@@ -58,14 +58,16 @@
     ENTER: 13,
   } as const;
 
-  import {Vue, Component, PropSync, Ref} from 'vue-property-decorator';
+  import { Vue, Component, PropSync, Ref } from 'vue-property-decorator';
   import { HTMLTargetType } from '@/types/common';
   @Component
   export default class Tags extends Vue {
-    @PropSync('accountsTagList') private accountsTagListSync!: Tag[];
-    
-    @Ref() private readonly inputRef!: HTMLInputElement;
-    
+    @PropSync('accountsTagList')
+    private accountsTagListSync!: Tag[];
+
+    @Ref()
+    private readonly inputRef!: HTMLInputElement;
+
     private tagList = tagList;
     private matchedTagList: Tag[] = [];
     private tag = '';
