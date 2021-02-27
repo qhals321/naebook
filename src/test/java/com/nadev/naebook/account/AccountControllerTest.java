@@ -11,6 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nadev.naebook.account.auth.Role;
+import com.nadev.naebook.account.dto.AccountRequestDto;
+import com.nadev.naebook.account.dto.TagRequestDto;
 import com.nadev.naebook.domain.Account;
 import com.nadev.naebook.domain.AccountTag;
 import com.nadev.naebook.domain.Tag;
@@ -31,9 +33,9 @@ import org.springframework.test.web.servlet.MockMvc;
 class AccountControllerTest {
 
   private static final String BASE_URL = "/api/account";
+
   @Autowired
   private MockMvc mockMvc;
-
   @Autowired
   private AccountRepository accountRepository;
   @Autowired
@@ -44,6 +46,8 @@ class AccountControllerTest {
   private TagRepository tagRepository;
   @Autowired
   private TestUser testUser;
+  @Autowired
+  private ObjectMapper objectMapper;
 
   @AfterEach
   private void afterEach() {
@@ -144,18 +148,19 @@ class AccountControllerTest {
   @Test
   void createAccountTag() throws Exception {
 
-    String tagTitle = "newTitle";
+    TagRequestDto newTitle = new TagRequestDto("newTitle");
 
     mockMvc.perform(post(BASE_URL+"/tags")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(tagTitle)
+        .content(objectMapper.writeValueAsString(newTitle))
     )
         .andDo(print())
-        .andExpect(status().isCreated());
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("title").value(newTitle.getTitle()));
 
-    Tag tag = tagRepository.findByTitle(tagTitle).orElseThrow();
-    Assertions.assertThat(tag.getTitle()).isEqualTo(tagTitle);
+    Tag tag = tagRepository.findByTitle(newTitle.getTitle()).orElseThrow();
+    Assertions.assertThat(tag.getTitle()).isEqualTo(newTitle.getTitle());
     Assertions.assertThat(tag.getInterest()).isEqualTo(1);
   }
 

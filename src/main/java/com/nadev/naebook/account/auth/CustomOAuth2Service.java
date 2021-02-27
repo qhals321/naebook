@@ -33,14 +33,11 @@ public class CustomOAuth2Service implements OAuth2UserService<OAuth2UserRequest,
         .role(Role.USER)
         .build();
 
-    saveIfAbsent(account);
-
-    return new PrincipalDetails(account, oAuth2User.getAttributes());
+    return new PrincipalDetails(saveIfAbsent(account), oAuth2User.getAttributes());
   }
 
     private Account saveIfAbsent(Account account) {
     return accountRepository.findByEmail(account.getEmail())
-        .or(() -> Optional.of(accountRepository.save(account)))
-        .orElseThrow();
+        .orElseGet(() -> accountRepository.save(account));
   }
 }

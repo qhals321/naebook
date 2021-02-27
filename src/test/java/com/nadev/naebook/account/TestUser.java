@@ -5,6 +5,7 @@ import com.nadev.naebook.account.auth.Role;
 import com.nadev.naebook.domain.Account;
 import com.nadev.naebook.domain.AccountTag;
 import com.nadev.naebook.domain.Tag;
+import com.nadev.naebook.library.AccountBookRepository;
 import com.nadev.naebook.library.TagRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +27,8 @@ public class TestUser {
   private TagRepository tagRepository;
   @Autowired
   private AccountTagRepository accountTagRepository;
+  @Autowired
+  private AccountBookRepository accountBookRepository;
   private Account account;
   private OAuth2User oAuth2User;
   private List<Tag> tags = new ArrayList<>();
@@ -65,6 +68,7 @@ public class TestUser {
   }
 
   public void deleteAll() {
+    accountBookRepository.deleteAll();
     accountTagRepository.deleteAll();
     accountRepository.deleteAll();
     tagRepository.deleteAll();
