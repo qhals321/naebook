@@ -58,11 +58,14 @@
     ENTER: 13,
   } as const;
 
-  import { Vue, Component, PropSync } from 'vue-property-decorator';
+  import {Vue, Component, PropSync, Ref} from 'vue-property-decorator';
   import { HTMLTargetType } from '@/types/common';
   @Component
   export default class Tags extends Vue {
     @PropSync('accountsTagList') private accountsTagListSync!: Tag[];
+    
+    @Ref() private readonly inputRef!: HTMLInputElement;
+    
     private tagList = tagList;
     private matchedTagList: Tag[] = [];
     private tag = '';
@@ -129,6 +132,7 @@
     private onMatchedTagPress(title: string): void {
       this.setAccountsTagList(title);
       this.resetCurrentFocusStyle();
+      this.inputRef.focus();
     }
 
     private setAccountsTagList(title: string): void {
