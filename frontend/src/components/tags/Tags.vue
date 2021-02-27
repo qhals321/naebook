@@ -32,14 +32,20 @@
   export default class Tags extends Vue {
     private tagList = tagList;
     private tag = '';
-	
-	  private onKeyPress({ target }: { target: HTMLInputElement }): void {
-		  this.tagList.push({
-			  id: this.tagList.length + 1,
-			  title: target.value,
-		  });
-		  this.tag = '';
-	  }
+
+    private onKeyPress({ target }: { target: HTMLInputElement }): void {
+      if (!this.isDuplicate(target.value)) {
+        this.tagList.push({
+          id: this.tagList.length + 1,
+          title: target.value,
+        });
+      }
+      this.tag = '';
+    }
+
+    private isDuplicate(title: string): boolean {
+      return this.tagList.some(tag => tag.title === title);
+    }
   }
 </script>
 
