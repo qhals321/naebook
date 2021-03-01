@@ -5,7 +5,7 @@
         :key="idx"
         :current-rating.sync="currentRating"
         :unique-key="idx"
-        :selected-rating="selectedRating"
+        :selected-rating="selectedRatingSync"
         @select-rating="selectRating"
       />
     </template>
@@ -13,17 +13,19 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component } from 'vue-property-decorator';
+  import { Vue, Component, PropSync } from 'vue-property-decorator';
   import Star from '@/components/Star.vue';
   @Component({
     components: { Star },
   })
   export default class StarRating extends Vue {
+    @PropSync('selectedRating')
+    private selectedRatingSync!: number;
+
     private currentRating = 0;
-    private selectedRating = 0;
 
     private selectRating(): void {
-      this.selectedRating = this.currentRating;
+      this.selectedRatingSync = this.currentRating;
     }
   }
 </script>
