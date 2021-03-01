@@ -171,6 +171,19 @@ input, textarea {
 	border-radius: var(--size-border-radius-regular);
 }
 
+.input-wrap {
+	position: relative;
+}
+
+.input-wrap input {
+	width: 100%;
+	height: 100%;
+}
+
+.input-wrap svg g path {
+	color: var(--color-navy)
+}
+
 .confirm-btn-wrap {
 	display: flex;
 	flex-direction: row;
