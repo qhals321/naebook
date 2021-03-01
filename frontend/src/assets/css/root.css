@@ -1,21 +1,26 @@
 :root {
+	--color-dark-black: 000000;
 	--color-black: #4f4f4f;
 	--color-dark-gray: #828282;
 	--color-gray: #bdbdbd;
 	--color-lite-gray: #F8F8F8;
 	--color-navy: #465562;
+	--color-red: #FF0D0D;
 	--color-dark-beige: #c2ae92;
 	--color-beige: #e4ddd1;
 	--color-yellow: #FFE49B;
 	--color-dark-white: #e5e5e5;
 	--color-white: #ffffff;
 	
-	--font-logo: 40px;
-	--font-title: 30px;
+	--font-logo: 50px;
+	--font-large-title: 40px;
+	--font-small-title: 30px;
 	--font-xlarge: 28px;
 	--font-large: 24px;
+	--font-semi-large: 20px;
 	--font-regular: 16px;
 	--font-small: 14px;
+	--font-micro: 12px;
 	
 	--font-style-gloria: 'Gloria Hallelujah', cursive;
 	--font-style-doheyn: 'Do Hyeon', sans-serif;
@@ -24,9 +29,13 @@
 	
 	--weight-bold: 700;
 	--weight-semi-bold: 600;
+	--weight-semi-regular: 500;
 	--weight-regular: 400;
 	
 	--size-border-radius-large: 32px;
+	--size-border-radius-medium: 18px;
+	--size-border-radius-regular: 12px;
+	--size-border-radius-btn: 10px;
 	--size-border-radius-normal: 4px;
 	
 	--button-large-width: 14rem;
@@ -35,5 +44,7 @@
 	--button-regular-height: 2rem;
 	--button-small-width: 5rem;
 	--button-small-height: 2rem;
+	
+	--modal-md-width: 632px;
+	--modal-md-height: 424px;
 }
-
