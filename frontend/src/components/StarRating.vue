@@ -6,7 +6,7 @@
         :current-rating.sync="currentRating"
         :unique-key="idx"
         :selected-rating="selectedRatingSync"
-        @select-rating="selectRating"
+        @select-rating="setSelectedRating"
       />
     </template>
   </div>
@@ -24,7 +24,7 @@
 
     private currentRating = 0;
 
-    private selectRating(): void {
+    private setSelectedRating(): void {
       this.selectedRatingSync = this.currentRating;
     }
   }
