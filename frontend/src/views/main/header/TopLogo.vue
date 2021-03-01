@@ -1,7 +1,5 @@
 <template>
-  <div class="header-logo">
-    <h1><a href="#none" class="header-logo">NaeBook</a></h1>
-  </div>
+  <div class="header-logo"><a href="#none">NaeBook</a></div>
 </template>
 
 <script lang="ts">

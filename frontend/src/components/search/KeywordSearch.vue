@@ -1,13 +1,12 @@
 <template>
-  <div class="input-wrap header-search-bx">
-    <label><input class="input-white" type="text" placeholder="검색"/></label>
-    <span class="icon">
-      <span
-        class="iconify"
-        data-icon="akar-icons:search"
-        data-inline="false"
-      ></span>
-    </span>
+  <div class="input-wrap header-search-bx shadow">
+    <span
+      class="iconify search-icon"
+      data-icon="akar-icons:search"
+      data-inline="false"
+    ></span>
+    <label><input class="input-white pd-left-regular" type="text"/></label>
+    <button class="search-btn">검색</button>
   </div>
 </template>
 

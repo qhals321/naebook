@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ly-container">
     <content-header />
     <body-content />
     <footer id="footer"></footer>
