@@ -27,5 +27,13 @@
     private setSelectedRating(): void {
       this.selectedRatingSync = this.currentRating;
     }
+
+    private setCurrentRating(): void {
+      this.currentRating = this.selectedRatingSync;
+    }
+
+    private created(): void {
+      this.setCurrentRating();
+    }
   }
 </script>
