@@ -214,3 +214,8 @@ input, textarea {
 	height: 194px;
 	background-color: var(--color-navy);
 }
+
+footer {
+	grid-row: 4;
+	grid-column: 1 / 4;
+}
