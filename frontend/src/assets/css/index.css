@@ -115,6 +115,24 @@ input, textarea {
 	margin-bottom: 25px;
 }
 
+.ly-container {
+	display: grid;
+	grid-template-columns: 85px 1fr 85px;
+	grid-template-rows: 135px 80px auto 80px;
+	grid-template-areas:
+		'. header .'
+		'. nav .'
+		'. main .'
+		'. footer .'
+;
+	width: 100vw;
+	min-height: 100vh;
+}
+
+.inline-grid {
+	display: inline-grid;
+}
+
 .ly-modal {
 	display: flex;
 	justify-content: space-between;
