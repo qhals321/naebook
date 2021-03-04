@@ -3,7 +3,23 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id "com.moowork.node" version "1.3.1"
-    id 'com.google.cloud.tools.jib' version '1.8.0'
+    id 'org.asciidoctor.convert' version '1.5.6'
+}
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from ("${asciidoctor.outputDir}/html5") {
+        into "static/docs"
+    }
 }
 
 node {
@@ -13,6 +29,7 @@ node {
     npmWorkDir = file("./frontend")
     nodeModulesDir = file("./frontend")
 }
+
 
 group = 'com.nedev'
 version = '0.0.1-SNAPSHOT'
@@ -47,6 +64,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.4'
+    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:1.2.6.RELEASE'
+    testCompile group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc', version: '2.0.2.RELEASE'
 }
 
 task setUp(type: NpmTask) {
@@ -64,5 +83,6 @@ task buildFrontEnd(type: NpmTask, dependsOn: setUp) {
 processResources.dependsOn 'buildFrontEnd'
 
 test {
+    outputs.dir snippetsDir
     useJUnitPlatform()
 }

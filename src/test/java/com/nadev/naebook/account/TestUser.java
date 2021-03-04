@@ -29,6 +29,9 @@ public class TestUser {
   private AccountTagRepository accountTagRepository;
   @Autowired
   private AccountBookRepository accountBookRepository;
+  @Autowired
+  private RelationRepository relationRepository;
+
   private Account account;
   private OAuth2User oAuth2User;
   private List<Tag> tags = new ArrayList<>();
@@ -68,6 +71,7 @@ public class TestUser {
   }
 
   public void deleteAll() {
+    relationRepository.deleteAll();
     accountBookRepository.deleteAll();
     accountTagRepository.deleteAll();
     accountRepository.deleteAll();

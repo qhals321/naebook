@@ -1,5 +1,6 @@
 package com.nadev.naebook.library;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -11,6 +12,7 @@ import com.nadev.naebook.account.AccountRepository;
 import com.nadev.naebook.account.AccountService;
 import com.nadev.naebook.account.TestUser;
 import com.nadev.naebook.account.auth.Role;
+import com.nadev.naebook.config.RestDocsConfiguration;
 import com.nadev.naebook.domain.Account;
 import com.nadev.naebook.domain.library.AccountBook;
 import com.nadev.naebook.domain.library.BookAccess;
@@ -26,14 +28,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Import(RestDocsConfiguration.class)
+@AutoConfigureRestDocs
 class LibraryControllerTest {
 
   private static final String BASE_URL = "/api/library";
@@ -65,10 +71,12 @@ class LibraryControllerTest {
     mockMvc.perform(post(BASE_URL + "/books")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content("123")
+        .content(objectMapper.writeValueAsString(new BookRequestDto("123")))
     )
         .andDo(print())
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isBadRequest())
+        .andDo(document("accountBook-create-duplicate"))
+    ;
   }
 
   @Test
@@ -86,7 +94,8 @@ class LibraryControllerTest {
         .andExpect(jsonPath("status").value(BookStatus.BOOKING.name()))
         .andExpect(jsonPath("reviewed").value(false))
         .andExpect(jsonPath("isbn").value(requestDto.getIsbn()))
-        .andExpect(jsonPath("accountId").value(accountId));
+        .andExpect(jsonPath("accountId").value(accountId))
+        .andDo(document("accountBook-create"));
 
     accountBookRepository.findWithAccountIsbn(accountId, requestDto.getIsbn()).orElseThrow();
   }
@@ -152,7 +161,9 @@ class LibraryControllerTest {
         .andExpect(jsonPath("reviewed").value(false))
         .andExpect(jsonPath("isbn").value(savedBook.getIsbn()))
         .andExpect(jsonPath("accountId").value(testUser.getAccount().getId()))
-        .andExpect(jsonPath("_links.self").exists());
+        .andExpect(jsonPath("_links.self").exists())
+        .andDo(document("accountBook-findOne"))
+    ;
   }
 
   @Test
@@ -214,7 +225,9 @@ class LibraryControllerTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.data[*].isbn")
             .value(Matchers.containsInAnyOrder(test1.getIsbn(), test2.getIsbn(),
-                test3.getIsbn(), test4.getIsbn(), testBook.getIsbn())));
+                test3.getIsbn(), test4.getIsbn(), testBook.getIsbn())))
+        .andDo(document("accountBook-findAll"))
+    ;
   }
 
   @Test
@@ -260,7 +273,8 @@ class LibraryControllerTest {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("isbn").value(saved.getIsbn()))
-        .andExpect(jsonPath("access").value(BookAccess.PRIVATE.name()));
+        .andExpect(jsonPath("access").value(BookAccess.PRIVATE.name()))
+        .andDo(document("accountBook-changeAccess"));
 
     AccountBook accountBook = accountBookRepository.findById(saved.getId()).orElseThrow();
     Assertions.assertThat(accountBook.getAccess()).isEqualTo(BookAccess.PRIVATE);
@@ -307,7 +321,9 @@ class LibraryControllerTest {
         .content(objectMapper.writeValueAsString(new StatusRequestDto(BookStatus.COMPLETE)))
     )
         .andDo(print())
-        .andExpect(status().is4xxClientError());
+        .andExpect(status().is4xxClientError())
+        .andDo(document("accountBook-changeStatus-notReviewed"))
+    ;
   }
 
   @Test
@@ -346,7 +362,8 @@ class LibraryControllerTest {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("isbn").value(saved.getIsbn()))
-        .andExpect(jsonPath("status").value(BookStatus.COMPLETE.name()));
+        .andExpect(jsonPath("status").value(BookStatus.COMPLETE.name()))
+        .andDo(document("accountBook-changeStatus"));
 
     AccountBook accountBook = accountBookRepository.findById(saved.getId()).orElseThrow();
     Assertions.assertThat(accountBook.getStatus()).isEqualTo(BookStatus.COMPLETE);
@@ -393,23 +410,25 @@ class LibraryControllerTest {
         .content(objectMapper.writeValueAsString(new ReviewRequestDto(null, "good")))
     )
         .andDo(print())
-        .andExpect(status().is4xxClientError());
+        .andExpect(status().is4xxClientError())
+        .andDo(document("accountBook-review-noScore"));
   }
 
   @Test
-  @DisplayName("점수만 남길 시 리뷰 성공")
+  @DisplayName("리뷰 성공")
   void bookReview_success() throws Exception {
     AccountBook accountBook = AccountBook.of("123", testUser.getAccount());
     AccountBook saved = accountBookRepository.save(accountBook);
     mockMvc.perform(put(BASE_URL+"/books/" + saved.getId() + "/review")
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
         .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(new ReviewRequestDto(2F, null)))
+        .content(objectMapper.writeValueAsString(new ReviewRequestDto(2F, "good")))
     )
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("score").value(2F))
-        .andExpect(jsonPath("review").isEmpty());
+        .andExpect(jsonPath("review").value("good"))
+        .andDo(document("accountBook-review"));
 
     AccountBook book = accountBookRepository.findById(saved.getId()).orElseThrow();
     Assertions.assertThat(book.isReviewed()).isTrue();
@@ -449,7 +468,8 @@ class LibraryControllerTest {
         .with(oauth2Login().oauth2User(testUser.getAuth2User()))
     )
         .andDo(print())
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andDo(document("accountBook-delete"));
 
     Optional<AccountBook> byId = accountBookRepository.findById(saved.getId());
     Assertions.assertThat(byId.isEmpty()).isTrue();

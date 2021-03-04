@@ -1,0 +1,149 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+== Account (계정 기능)
+
+=== > (GET) 계정 정보 조회
+==== * Account-Id로 계정 정보 조회
+- Request
+include::{snippets}/account-search/http-request.adoc[]
+- Response
+include::{snippets}/account-search/http-response.adoc[]
+==== * 현재 로그인 되어있는 계정 정보 조회
+- Request
+include::{snippets}/account-me/http-request.adoc[]
+- Response
+include::{snippets}/account-me/http-response.adoc[]
+
+=== > (PUT) 계정 정보 업데이트
+==== * 정상
+- Request
+include::{snippets}/account-update/http-request.adoc[]
+- Response
+include::{snippets}/account-update/http-response.adoc[]
+==== * 에러 (이름 X)
+- Request
+include::{snippets}/account-update-4xx/http-request.adoc[]
+- Response
+include::{snippets}/account-update-4xx/http-response.adoc[]
+
+=== > (POST) 계정 태그 추가
+- Request
+include::{snippets}/accountTag-create/http-request.adoc[]
+- Response
+include::{snippets}/accountTag-create/http-response.adoc[]
+
+=== > (GET) 계정 태그 검색
+==== * AccountTag-Id 로 계정 태그 조회
+- Request
+include::{snippets}/accountTag-find/http-request.adoc[]
+- Response
+include::{snippets}/accountTag-find/http-response.adoc[]
+==== * 현재 로그인 되어있는 계정 태그 정보 전부 조회
+- Request
+include::{snippets}/accountTag-find-me/http-request.adoc[]
+- Response
+include::{snippets}/accountTag-find-me/http-response.adoc[]
+==== * Account-Id 로 계정 태그 전부 조회
+- Request
+include::{snippets}/accountTag-findAll/http-request.adoc[]
+- Response
+include::{snippets}/accountTag-findAll/http-response.adoc[]
+
+=== > (DELETE) 계정 태그 삭제
+- Request
+include::{snippets}/accountTag-remove/http-request.adoc[]
+- Response
+include::{snippets}/accountTag-remove/http-response.adoc[]
+
+=== > (POST) 유저 팔로우
+- Request
+include::{snippets}/account-follow/http-request.adoc[]
+- Response
+include::{snippets}/account-follow/http-response.adoc[]
+
+=== > (DELETE) 유저 언팔로우
+- Request
+include::{snippets}/account-unfollow/http-request.adoc[]
+- Response
+include::{snippets}/account-unfollow/http-response.adoc[]
+
+=== > (GET) 유저 관계 조회
+- Request
+include::{snippets}/account-follows/http-request.adoc[]
+- Response
+include::{snippets}/account-follows/http-response.adoc[]
+
+== Library (도서관 기능)
+=== > (POST) 계정 북 생성
+==== * 정상
+- Request
+include::{snippets}/accountBook-create/http-request.adoc[]
+- Response
+include::{snippets}/accountBook-create/http-response.adoc[]
+==== * 에러 (이미 생성되어있는 책을 다시 생성)
+- Request
+include::{snippets}/accountBook-create-duplicate/http-request.adoc[]
+- Response
+include::{snippets}/accountBook-create-duplicate/http-response.adoc[]
+
+=== > (GET) 계정 북 조회
+==== * 계정 북 하나 조회
+현재 로그인 되어 있는 계정과 다른 계정 북 조회시 "access = PUBLIC" 만 조회가 가능하다.
+
+- Request
+include::{snippets}/accountBook-findOne/http-request.adoc[]
+- Response
+include::{snippets}/accountBook-findOne/http-response.adoc[]
+==== * 계정 북 전체 조회
+현재 로그인 되어 있는 계정과 다른 계정의 북은 "access=PRIVATE" 경우는 필터링이 되어 조회된다.
+
+- Request
+include::{snippets}/accountBook-findAll/http-request.adoc[]
+- Response
+include::{snippets}/accountBook-findAll/http-response.adoc[]
+
+=== > (PUT) 계정 북 접근 제한 변경
+접근 제한은 "PUBLIC"과 "PRIVATE"가 존재한다.
+
+- Request
+include::{snippets}/accountBook-changeAccess/http-request.adoc[]
+- Response
+include::{snippets}/accountBook-changeAccess/http-response.adoc[]
+
+=== > (PUT) 계정 북 상태 변경
+상태는 "BOOKING", "READING", "COMPLETE"가 존재한다.
+
+==== * 정상
+- Request
+include::{snippets}/accountBook-changeStatus/http-request.adoc[]
+- Response
+include::{snippets}/accountBook-changeStatus/http-response.adoc[]
+==== * 에러 (리뷰를 하지 않고 "COMPLETE"로 변경)
+- Request
+include::{snippets}/accountBook-changeStatus-notReviewed/http-request.adoc[]
+- Response
+include::{snippets}/accountBook-changeStatus-notReviewed/http-response.adoc[]
+
+=== > (PUT) 계정 북 리뷰
+==== * 정상
+- Request
+include::{snippets}/accountBook-review/http-request.adoc[]
+- Response
+include::{snippets}/accountBook-review/http-response.adoc[]
+==== * 에러 (점수가 없을 시)
+- Request
+include::{snippets}/accountBook-review-noScore/http-request.adoc[]
+- Response
+include::{snippets}/accountBook-review-noScore/http-response.adoc[]
+
+=== > (DELETE) 계정 북 삭제
+- Request
+include::{snippets}/accountBook-delete/http-request.adoc[]
+- Response
+include::{snippets}/accountBook-delete/http-response.adoc[]

@@ -5,12 +5,17 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.nadev.naebook.account.auth.LoginUser;
 import com.nadev.naebook.account.dto.AccountRequestDto;
+import com.nadev.naebook.account.dto.RelationRequestDto;
 import com.nadev.naebook.account.dto.TagRequestDto;
 import com.nadev.naebook.account.model.AccountModel;
 import com.nadev.naebook.account.model.AccountTagModel;
+import com.nadev.naebook.account.model.RelationModel;
 import com.nadev.naebook.common.ResponseDto;
 import com.nadev.naebook.domain.Account;
 import com.nadev.naebook.domain.AccountTag;
+import com.nadev.naebook.domain.Relation;
+import com.nadev.naebook.exception.AlreadyExistsException;
+import com.nadev.naebook.exception.NotFoundException;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +43,7 @@ public class AccountController {
   private final AccountRepository accountRepository;
   private final AccountService accountService;
   private final AccountTagRepository accountTagRepository;
+  private final RelationRepository relationRepository;
 
   @GetMapping("/{id}")
   public ResponseEntity accountById(@PathVariable Long id) {
@@ -131,5 +137,41 @@ public class AccountController {
         .map(AccountTagModel::new)
         .collect(Collectors.toSet());
     return ResponseEntity.ok(new ResponseDto<>(models));
+  }
+
+  @GetMapping("/relation/{id}")
+  public ResponseEntity findRelation(@PathVariable Long id) {
+    Optional<Relation> foundRelation = relationRepository.findById(id);
+    if (foundRelation.isEmpty()) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(new RelationModel(foundRelation.get()));
+  }
+
+  @PostMapping("/follow")
+  public ResponseEntity followAccount(@LoginUser Account account,
+      @RequestBody RelationRequestDto requestDto) {
+    try {
+      Relation relation = accountService.followAccount(account.getId(), requestDto.getFolloweeId());
+      URI uri = linkTo(methodOn(AccountController.class)
+          .findRelation(relation.getId()))
+          .withSelfRel().toUri();
+      return ResponseEntity.created(uri).build();
+    } catch (NotFoundException e) {
+      return ResponseEntity.notFound().build();
+    } catch (AlreadyExistsException e) {
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
+  @DeleteMapping("/unfollow")
+  public ResponseEntity unfollowAccount(@LoginUser Account account,
+      @RequestBody RelationRequestDto requestDto) {
+    try {
+      accountService.unfollowAccount(account.getId(), requestDto.getFolloweeId());
+      return ResponseEntity.ok().build();
+    } catch (NotFoundException e) {
+      return ResponseEntity.notFound().build();
+    }
   }
 }
