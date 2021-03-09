@@ -50,11 +50,14 @@ public class LibraryController {
             requestDto.getIsbn()).ifPresent(book -> {
             throw new AlreadyExistsException();
         });
+
         AccountBook accountBook = AccountBook.of(requestDto.getIsbn(), account);
         AccountBook saved = accountBookRepository.save(accountBook);
+
         URI uri = linkTo(methodOn(LibraryController.class)
             .findBook(saved.getId(), account)).withSelfRel()
             .toUri();
+
         return ResponseEntity.created(uri).body(new AccountBookModel(saved));
     }
 
@@ -62,9 +65,11 @@ public class LibraryController {
     public ResponseEntity findBook(@PathVariable Long bookId, @LoginUser Account account) {
         AccountBook accountBook = accountBookRepository.findById(bookId)
             .orElseThrow(NotFoundException::new);
+
         if (!accessible(account, accountBook)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+
         return ResponseEntity.ok(new AccountBookModel(accountBook));
     }
 
@@ -72,12 +77,15 @@ public class LibraryController {
     public ResponseEntity findBooksByAccount(
         @PathVariable Long accountId, @LoginUser Account account) {
         accountRepository.findById(accountId).orElseThrow(NotFoundException::new);
+
         List<AccountBook> accountBooks = accountBookRepository.findAllByAccount(accountId);
+
         List<AccountBookModel> models =
             accountBooks.stream()
                 .filter(book -> accessible(account, book))
                 .map(AccountBookModel::new)
                 .collect(Collectors.toList());
+
         return ResponseEntity.ok(new ResponseDto<>(models));
     }
 
@@ -115,14 +123,20 @@ public class LibraryController {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors);
         }
-            AccountBook reviewedBook = libraryService
-                .review(account.getId(), bookId, requestDto.getScore(), requestDto.getReview());
-            return ResponseEntity.ok().body(new AccountBookModel(reviewedBook));
+
+        AccountBook reviewedBook = libraryService.review(
+            account.getId(),
+            bookId,
+            requestDto.getScore(),
+            requestDto.getReview()
+        );
+
+        return ResponseEntity.ok().body(new AccountBookModel(reviewedBook));
     }
 
     @DeleteMapping("/books/{bookId}")
     public ResponseEntity deleteBook(@LoginUser Account account, @PathVariable Long bookId) {
-            libraryService.delete(account.getId(), bookId);
-            return ResponseEntity.ok().build();
+        libraryService.delete(account.getId(), bookId);
+        return ResponseEntity.ok().build();
     }
 }

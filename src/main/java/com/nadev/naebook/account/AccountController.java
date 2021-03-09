@@ -56,8 +56,10 @@ public class AccountController {
     private ResponseEntity<?> findAccountById(Long id) {
         Account account = accountRepository.findById(id).orElseThrow(NotFoundException::new);
         AccountModel model = new AccountModel(account);
+
         model.add(
-            linkTo(methodOn(AccountController.class).accountById(id)).withRel("update-account"));
+            linkTo(methodOn(AccountController.class).accountById(id))
+                .withRel("update-account"));
         return ResponseEntity.ok(model);
     }
 
@@ -69,7 +71,9 @@ public class AccountController {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors);
         }
+
         Account newAccount = accountService.updateAccount(requestDto, account.getId());
+
         return ResponseEntity.ok(new AccountModel(newAccount));
     }
 
@@ -78,19 +82,26 @@ public class AccountController {
         @RequestBody TagRequestDto requestDto) {
         AccountTag accountTag = accountService
             .createAccountTag(account.getId(), requestDto.getTitle());
+
         URI uri = linkTo(methodOn(AccountController.class)
             .findAccountTag(accountTag.getId()))
             .withSelfRel().toUri();
+
         return ResponseEntity.created(uri).body(new AccountTagModel(accountTag));
     }
 
     @GetMapping("/tags/{tagId}")
     public ResponseEntity findAccountTag(@PathVariable Long tagId) {
-        AccountTag findAccountTag = accountTagRepository.findById(tagId)
+        AccountTag findAccountTag = accountTagRepository
+            .findById(tagId)
             .orElseThrow(NotFoundException::new);
+
         AccountTagModel model = new AccountTagModel(findAccountTag);
-        model.add(linkTo(methodOn(AccountController.class).findAccountTag(tagId))
+
+        model.add(linkTo(methodOn(AccountController.class)
+            .findAccountTag(tagId))
             .withRel("remove-accountTag"));
+
         return ResponseEntity.ok(model);
     }
 
@@ -98,30 +109,38 @@ public class AccountController {
     public ResponseEntity deleteAccountTag(@LoginUser Account account, @PathVariable Long tagId) {
         AccountTag findTag = accountTagRepository.findById(tagId)
             .orElseThrow(NotFoundException::new);
+
         Long accountId = findTag.getAccount().getId();
         if (!accountId.equals(account.getId())) {
             throw new ForbiddenException();
         }
+
         accountTagRepository.delete(findTag);
+
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/me/tags")
     public ResponseEntity findLoginAccountTag(@LoginUser Account account) {
         List<AccountTag> accountTags = accountTagRepository.findAllByAccount(account.getId());
+
         Set<AccountTagModel> models = accountTags.stream()
             .map(AccountTagModel::new)
             .collect(Collectors.toSet());
+
         return ResponseEntity.ok(new ResponseDto<>(models));
     }
 
     @GetMapping("/{accountId}/tags")
     public ResponseEntity findAccountTagByAccountId(@PathVariable Long accountId) {
         accountRepository.findById(accountId).orElseThrow(NotFoundException::new);
+
         List<AccountTag> accountTag = accountTagRepository.findAllByAccount(accountId);
+
         Set<AccountTagModel> models = accountTag.stream()
             .map(AccountTagModel::new)
             .collect(Collectors.toSet());
+
         return ResponseEntity.ok(new ResponseDto<>(models));
     }
 
