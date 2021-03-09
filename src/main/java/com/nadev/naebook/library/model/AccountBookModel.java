@@ -3,7 +3,6 @@ package com.nadev.naebook.library.model;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nadev.naebook.domain.library.AccountBook;
 import com.nadev.naebook.domain.library.BookAccess;
 import com.nadev.naebook.domain.library.BookStatus;

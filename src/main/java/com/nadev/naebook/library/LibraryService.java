@@ -1,6 +1,5 @@
 package com.nadev.naebook.library;
 
-import com.nadev.naebook.domain.Account;
 import com.nadev.naebook.domain.library.AccountBook;
 import com.nadev.naebook.domain.library.BookAccess;
 import com.nadev.naebook.domain.library.BookStatus;

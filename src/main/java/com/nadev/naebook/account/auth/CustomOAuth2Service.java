@@ -1,8 +1,7 @@
 package com.nadev.naebook.account.auth;
 
-import com.nadev.naebook.domain.Account;
 import com.nadev.naebook.account.AccountRepository;
-import java.util.Optional;
+import com.nadev.naebook.domain.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
