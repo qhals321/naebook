@@ -6,5 +6,5 @@ module.exports = {
   bracketSpacing: true,
   trailingComma: true,
   vueIndentScriptAndStyle: true,
-  printWidth: 80
+  printWidth: 80,
 };
