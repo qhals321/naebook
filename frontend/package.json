@@ -10,6 +10,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/url-template": "^2.0.28",
+    "cache-loader": "^4.1.0",
     "core-js": "^3.6.5",
     "path": "^0.12.7",
     "request": "^2.88.2",
@@ -38,6 +41,7 @@
     "eslint-plugin-vue": "^7.0.0-0",
     "prettier": "^1.19.1",
     "typescript": "~3.9.3",
-    "vue-jest": "^5.0.0-0"
+    "vue-jest": "^5.0.0-0",
+    "vue-template-compiler": "^2.6.12"
   }
 }

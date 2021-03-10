@@ -1175,6 +1175,13 @@
   "resolved" "https://registry.npm.taobao.org/@types/anymatch/download/@types/anymatch-1.3.1.tgz?cache=0&sync_timestamp=1605052185590&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fanymatch%2Fdownload%2F%40types%2Fanymatch-1.3.1.tgz"
   "version" "1.3.1"
 
+"@types/axios@^0.14.0":
+  "integrity" "sha1-7CMA++fX3d1+udOr+HmZlkyvzkY="
+  "resolved" "https://registry.npmjs.org/@types/axios/-/axios-0.14.0.tgz"
+  "version" "0.14.0"
+  dependencies:
+    "axios" "*"
+
 "@types/babel__core@^7.1.0":
   "integrity" "sha1-TY6eUesmVVKn5PH/IhmrYTO9+y0="
   "resolved" "https://registry.npm.taobao.org/@types/babel__core/download/@types/babel__core-7.1.12.tgz"
@@ -1400,6 +1407,11 @@
   "version" "3.12.0"
   dependencies:
     "source-map" "^0.6.1"
+
+"@types/url-template@^2.0.28":
+  "integrity" "sha512-1i/YtOhvlWDbMDTWhCfvhyUwBS9vNFs78sJOyahoruJCcDbwaSH73AlnuCp7luKPm6qqdCg4VKq/IHUncl6gZA=="
+  "resolved" "https://registry.npmjs.org/@types/url-template/-/url-template-2.0.28.tgz"
+  "version" "2.0.28"
 
 "@types/webpack-dev-server@^3.11.0":
   "integrity" "sha1-+PTawdoibVML0VodXcNLI7p2bMs="
@@ -2426,6 +2438,13 @@
   "integrity" "sha1-1h9G2DslGSUOJ4Ta9bCUeai0HFk="
   "resolved" "https://registry.npm.taobao.org/aws4/download/aws4-1.11.0.tgz"
   "version" "1.11.0"
+
+"axios@*":
+  "integrity" "sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.21.1.tgz"
+  "version" "0.21.1"
+  dependencies:
+    "follow-redirects" "^1.10.0"
 
 "babel-code-frame@^6.22.0", "babel-code-frame@^6.26.0":
   "integrity" "sha1-Y/1D99weO7fONZR9uP42mj9Yx0s="
@@ -5138,7 +5157,7 @@
     "inherits" "^2.0.3"
     "readable-stream" "^2.3.6"
 
-"follow-redirects@^1.0.0":
+"follow-redirects@^1.0.0", "follow-redirects@^1.10.0":
   "integrity" "sha1-3XPI7/wScoulz0JZ12DqX7g+MUc="
   "resolved" "https://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.13.2.tgz"
   "version" "1.13.2"
@@ -11073,9 +11092,9 @@
     "hash-sum" "^1.0.2"
     "loader-utils" "^1.0.2"
 
-"vue-template-compiler@^2.x":
-  "integrity" "sha1-lH7XGWdEyKUoXr4SM/6WBDf8xX4="
-  "resolved" "https://registry.npm.taobao.org/vue-template-compiler/download/vue-template-compiler-2.6.12.tgz"
+"vue-template-compiler@^2.6.12", "vue-template-compiler@^2.x":
+  "integrity" "sha512-OzzZ52zS41YUbkCBfdXShQTe69j1gQDZ9HIX8miuC9C3rBCk9wIRjLiZZLrmX9V+Ftq/YEyv1JaVr5Y/hNtByg=="
+  "resolved" "https://registry.npmjs.org/vue-template-compiler/-/vue-template-compiler-2.6.12.tgz"
   "version" "2.6.12"
   dependencies:
     "de-indent" "^1.0.2"
