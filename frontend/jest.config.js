@@ -5,12 +5,7 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest',
   },
   moduleFileExtensions: ['js', 'ts', 'json', 'vue'],
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-  },
-  testMatch: [
-    '<rootDir>/src/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)',
-  ],
+  testMatch: ['<rootDir>/src/**/*.spec.(js|jsx|ts|tsx)'],
   testURL: 'http://localhost/',
   modulePathIgnorePatterns: [
     '<rootDir>/node_modules',
