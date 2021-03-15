@@ -1,3 +1,42 @@
-h1 {
-	font-size: 16px;
+:root {
+	--color-black: #4f4f4f;
+	--color-dark-gray: #828282;
+	--color-gray: #bdbdbd;
+	--color-lite-gray: #F8F8F8;
+	--color-navy: #465562;
+	--color-dark-beige: #c2ae92;
+	--color-beige: #e4ddd1;
+	--color-yellow: #FFE49B;
+	--color-dark-white: #e5e5e5;
+	--color-white: #ffffff;
+	
+	--font-style-gaegu: 'Gaegu', cursive;
+	--font-style-poor: 'Poor Story', cursive;
+	
+	--font-logo: 40px;
+	--font-title-big: 38px;
+	--font-title-regular: 32px;
+	--font-title-small: 28px;
+	--font-title-micro: 24px;
+	
+	--font-text-big: 26px;
+	--font-text-semi-big: 22px;
+	--font-text-regular: 18px;
+	--font-text-small: 14px;
+	--font-text-micro: 12px;
+	
+	--weight-bold: 700;
+	--weight-semi-bold: 600;
+	--weight-regular: 400;
+	
+	--size-border-radius-large: 32px;
+	--size-border-radius-normal: 16px;
+	--size-border-radius-small: 4px;
+	
+	--button-large-width: 14rem;
+	--button-large-height: 2.2rem;
+	--button-regular-width: 7rem;
+	--button-regular-height: 2rem;
+	--button-small-width: 5rem;
+	--button-small-height: 2rem;
 }
