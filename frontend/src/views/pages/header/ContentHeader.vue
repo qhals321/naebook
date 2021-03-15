@@ -1,5 +1,5 @@
 <template>
-  <header class="inline-grid header-container shadow">header</header>
+  <header class="display-i-g header-container shadow-normal">header</header>
 </template>
 
 <script lang="ts">

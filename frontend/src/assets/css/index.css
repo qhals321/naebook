@@ -101,11 +101,11 @@ button {
 	min-height: 100vh;
 }
 
-.inline-grid {
+.display-i-g {
 	display: inline-grid;
 }
 
-.shadow {
+.shadow-normal {
 	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 

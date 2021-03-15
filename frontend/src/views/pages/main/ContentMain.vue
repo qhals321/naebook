@@ -1,5 +1,5 @@
 <template>
-  <main class="inline-grid main-container">main</main>
+  <main class="display-i-g main-container">main</main>
 </template>
 
 <script lang="ts">

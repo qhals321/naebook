@@ -1,5 +1,5 @@
 <template>
-  <nav class="inline-grid nav-container shadow">nav</nav>
+  <nav class="display-i-g nav-container shadow-normal">nav</nav>
 </template>
 
 <script lang="ts">
