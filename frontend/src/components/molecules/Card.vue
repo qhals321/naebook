@@ -21,7 +21,7 @@
 <style scoped>
   .card {
     margin: 0;
-    width: 100%;
+    width: 309px;
     height: 200px;
     border: 1px solid black;
   }
