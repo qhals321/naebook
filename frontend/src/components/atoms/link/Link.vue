@@ -31,4 +31,9 @@
     /* TODO: 임시코드 */
     background-color: blue;
   }
+
+  .logo {
+    font-family: var(--font-style-gaegu);
+    font-size: var(--font-logo);
+  }
 </style>

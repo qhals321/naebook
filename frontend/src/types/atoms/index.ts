@@ -1,7 +1,7 @@
 export type LinkType = 'link' | 'a';
 
 export type LinkOption = {
-	type?: LinkType;
+  type?: LinkType;
   class?: string;
   path: string;
   label: string;
