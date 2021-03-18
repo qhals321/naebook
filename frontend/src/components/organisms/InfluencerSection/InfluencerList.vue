@@ -40,11 +40,14 @@
   });
 </script>
 <style scoped>
+/*글로벌로 빼면 좋을 듯*/
   .list-grid {
     display: grid;
     grid-column: 3;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, auto);
+
+    /* TODO: 머터리얼 레이아웃 기준 반응형으로  */
     column-gap: 24px;
     row-gap: 24px;
   }
