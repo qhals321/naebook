@@ -13,6 +13,7 @@
     path: '/',
     label: 'NaeBook',
   };
+
   export default defineComponent({
     name: 'Logo',
     components: { Link },

@@ -10,30 +10,33 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { LinkOption } from '@/types/atoms';
+  // import { LinkOption } from '@/types/atoms';
 
   export default defineComponent({
     name: 'Link',
-    props: {
-      option: LinkOption,
-    },
+    props: ['option'],
+    // TODO: LinkOption only refers to a type, but is being used as a value here.
+    // props: {
+    //   option: LinkOption,
+    // },
   });
 </script>
 
 <style scoped>
   a {
-    /* TODO: 임시코드 */
+    font-family: var(--font-style-gaegu);
+    font-size: var(--font-title-regular);
+    font-weight: var(--weight-bold);
     display: inline-block;
-    background-color: red;
+    color: var(--color-dark-gray);
   }
 
-  .router-link-active {
-    /* TODO: 임시코드 */
-    background-color: blue;
+  .router-link-exact-active {
+    color: var(--color-black);
   }
 
   .logo {
-    font-family: var(--font-style-gaegu);
     font-size: var(--font-logo);
+    color: var(--color-white);
   }
 </style>
