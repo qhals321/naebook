@@ -1,5 +1,7 @@
 <template>
-  <router-link :to="linkToOption">{{ linkToOption.name }}</router-link>
+  <router-link :class="option.class" :to="option.to">{{
+    option.name
+  }}</router-link>
 </template>
 
 <script lang="ts">
@@ -7,6 +9,19 @@
 
   export default defineComponent({
     name: 'Link',
-    props: ['linkToOption'],
+    props: ['option'],
   });
 </script>
+
+<style scoped>
+  a {
+    /* TODO: 임시코드 */
+    display: inline-block;
+    background-color: red;
+  }
+
+  .router-link-active {
+    /* TODO: 임시코드 */
+    background-color: blue;
+  }
+</style>
