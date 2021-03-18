@@ -1,5 +1,5 @@
 <template>
-  <ul class="main-container">
+  <ul class="list-grid">
     <li>
       <card />
     </li>
@@ -40,7 +40,7 @@
   });
 </script>
 <style scoped>
-  .main-container {
+  .list-grid {
     display: grid;
     grid-column: 3;
     grid-template-columns: repeat(3, 1fr);
