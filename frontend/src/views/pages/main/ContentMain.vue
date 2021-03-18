@@ -1,14 +1,22 @@
 <template>
-  <main class="display-i-g main-container">main</main>
+  <main class="content">
+    <influencer-section />
+  </main>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue';
+  import InfluencerSection from '@/components/organisms/InfluencerSection/InfluencerSection.vue';
 
   export default defineComponent({
     name: 'ContentMain',
-    components: {},
+    components: { InfluencerSection },
   });
 </script>
 
-<style scoped></style>
+<style scoped>
+  .content {
+    margin: 0 auto;
+    width: 1024px;
+  }
+</style>

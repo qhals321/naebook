@@ -1,5 +1,5 @@
 <template>
-  <div class="ly-container">
+  <div>
     <content-header />
     <content-nav />
     <content-main />

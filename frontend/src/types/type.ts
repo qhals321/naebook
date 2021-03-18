@@ -1,1 +1,1 @@
-const type = 'test'
+const type = 'test';
