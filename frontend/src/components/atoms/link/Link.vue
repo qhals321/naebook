@@ -1,15 +1,22 @@
 <template>
-  <router-link :class="option.class" :to="option.to">{{
-    option.name
-  }}</router-link>
+  <router-link
+    v-if="option.type === 'link'"
+    :class="option.class"
+    :to="option.path"
+    >{{ option.label }}</router-link
+  >
+  <a v-else :class="option.class" :href="option.path">{{ option.label }}</a>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue';
+  import { LinkOption } from '@/types/atoms';
 
   export default defineComponent({
     name: 'Link',
-    props: ['option'],
+    props: {
+      option: LinkOption,
+    },
   });
 </script>
 
