@@ -66,6 +66,7 @@ body {
 	/*IE and Edge,/ Firefox*/
 	-ms-overflow-style: none;
 	scrollbar-width: none;
+	
 }
 
 /*/Chrome, Safari, Opera*/
@@ -87,6 +88,7 @@ button {
 	width: 100vw;
 }
 
+/*화면 전체를 */
 .ly-container {
 	display: grid;
 	grid-template-columns: 85px 1fr 85px;

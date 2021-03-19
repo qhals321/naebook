@@ -1,5 +1,5 @@
 <template>
-  <nav class="display-i-g nav-container shadow-normal">nav</nav>
+  <nav class="">nav</nav>
 </template>
 
 <script lang="ts">
