@@ -1,5 +1,5 @@
 <template>
-  <label :for="labelOption.for">{{ option.label }}</label>
+  <label :for="option.for">{{ option.label }}</label>
 </template>
 
 <script lang="ts">
