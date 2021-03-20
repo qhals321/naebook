@@ -17,6 +17,6 @@
 <style scoped>
   .content {
     margin: 0 auto;
-    max-width: 1024px;
+    max-width: 1728px;
   }
 </style>

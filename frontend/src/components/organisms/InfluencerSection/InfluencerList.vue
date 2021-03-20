@@ -48,7 +48,7 @@
   .list-grid {
     display: grid;
     grid-column: 3;
-    grid-template-columns: repeat(auto-fill, minmax(309px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(424px, 1fr));
     grid-template-rows: repeat(3, auto);
 
     /* TODO: 머터리얼 레이아웃 기준 반응형으로  */

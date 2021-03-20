@@ -1,22 +1,47 @@
 <template>
   <card class="influencer-card" backgroundColor="#F8F8F8">
-    <div class="card-left">
-      <div class="profile-container">
-        <avartar
-          class="profile-image"
-          imageUrl="https://pbs.twimg.com/profile_images/999234448334835714/DHIp7Ut_.jpg"
-          alt="프로필 사진"
-        />
-        <h3 class="user-name">나봄</h3>
+    <div class="card-content">
+      <div class="card-content-left">
+        <div class="profile-container">
+          <avartar
+            class="profile-image"
+            imageUrl="https://pbs.twimg.com/profile_images/999234448334835714/DHIp7Ut_.jpg"
+            alt="프로필 사진"
+          />
+          <h3 class="influencer-name">나봄</h3>
+        </div>
+        <button class="follow-button">팔로우</button>
       </div>
-      <button class="follow-button">팔로우</button>
-    </div>
-    <div class="card-right">
-      <div></div>
+      <div class="card-content-right">
+        <div class="influencer-info">
+          <div class="influencer-library-container">
+            <h4 class="influencer-info-title">라이브러리</h4>
+            <div class="library-count">20 권</div>
+          </div>
+          <div class="influencer-follower-container">
+            <h4 class="influencer-info-title">팔로워</h4>
+            <div class="follower-count">20 명</div>
+          </div>
+          <div class="influencer-following-container">
+            <h4 class="influencer-info-title">팔로잉</h4>
+            <div class="following-count">20 명</div>
+          </div>
+        </div>
+        <div class="influencer-introduce">
+          안녕 얘들아 반가워 나는 나봄이라고 해. 나는 스프링으로 다시 태어난
+          개발자가 되고 싶어서 닉네임을 나봄이라 지었어. 어때? 후훗
+        </div>
+        <div></div>
+      </div>
     </div>
     <div class="card-bottom">
-      <ul>
-        <li><tag text="언제나난극단의길을달린다" /></li>
+      <!-- TODO: 무슨 태그 모음인지 물어보기-->
+      <ul class="tag-list">
+        <li class="tag-list-item"><tag text="언제나난극단의길을달린다" /></li>
+        <li class="tag-list-item"><tag text="언제나난" /></li>
+        <li class="tag-list-item"><tag text="언제나난" /></li>
+        <li class="tag-list-item"><tag text="언제나난" /></li>
+        <li class="tag-list-item"><tag text="언제나난극단의길을달린다" /></li>
       </ul>
     </div>
   </card>
@@ -44,30 +69,76 @@
   });
 </script>
 <style scoped>
+  ul,
+  li {
+    display: inline-block;
+  }
+
   div.influencer-card {
+    font-family: var(--font-style-poor);
+
     padding: 18px 11px 18px 11px;
   }
 
-  div.influencer-card .card-left {
+  div.card-content {
+    display: flex;
+
+    margin-bottom: 11px;
+  }
+
+  div.card-content .card-content-left {
+    margin-right: 32px;
     text-align: center;
   }
 
-  div.card-left .profile-container {
+  div.card-content-left .profile-container {
     text-align: center;
   }
 
   /* TODO: 보미님이 타이포 그래피 스타일 따로 정의해놓으신듯, 확인하기*/
-  div.card-left .user-name {
+  div.card-content-left h3.influencer-name {
     font-size: 1.5rem;
     font-weight: bold;
   }
 
   /* TODO: button 네이밍 이슈 해결되면 버튼 컴포넌트로 바꾸기*/
-  div.card-left .follow-button {
+  div.card-content-left button.follow-button {
     width: 70px;
     height: 30px;
     border: 1px solid #465562;
     border-radius: 9px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  div.card-content .card-content-right {
+    display: flex;
+    /*위에서 아래로 수직 배치*/
+    flex-direction: column;
+    /*중앙정렬*/
+    justify-content: center;
+  }
+
+  div.card-content-right .influencer-info {
+    display: flex;
+    margin-bottom: 15px;
+    justify-content: space-around;
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  div.influencer-info .influencer-info-title {
+    font-weight: bold;
+  }
+
+  div.card-content-right .influencer-introduce {
+    padding: 8px;
+    font-size: 0.75rem;
+    text-align: center;
+    border: 1px solid #c4c4c4;
+    border-radius: 12px;
+  }
+
+  ul.tag-list li.tag-list-item {
+    margin-right: 5px;
   }
 </style>
