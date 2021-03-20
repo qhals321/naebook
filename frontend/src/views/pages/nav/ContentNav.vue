@@ -1,5 +1,5 @@
 <template>
-	<!--	TODO: 화면 확인을 위한 임시 코드  -->
+  <!--	TODO: 화면 확인을 위한 임시 코드  -->
   <nav><gng-menu /></nav>
 </template>
 
@@ -13,7 +13,7 @@
 </script>
 
 <style scoped>
-  .nav {
+  nav {
     background-color: var(--color-beige);
     width: 100vw;
   }
