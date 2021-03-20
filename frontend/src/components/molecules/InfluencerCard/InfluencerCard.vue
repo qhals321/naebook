@@ -27,10 +27,10 @@
             <div class="following-count">20 명</div>
           </div>
         </div>
-        <div class="influencer-introduce">
+        <p class="influencer-introduce">
           안녕 얘들아 반가워 나는 나봄이라고 해. 나는 스프링으로 다시 태어난
           개발자가 되고 싶어서 닉네임을 나봄이라 지었어. 어때? 후훗
-        </div>
+        </p>
         <div></div>
       </div>
     </div>
@@ -112,7 +112,7 @@
     justify-content: center;
   }
 
-  div.card-content-right .influencer-introduce {
+  div.card-content-right p.influencer-introduce {
     padding: 8px;
     font-size: 0.75rem;
     text-align: center;
@@ -123,7 +123,7 @@
   div.card-content-right .influencer-info {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 15px;
+    margin: 30px 0 15px 0;
     font-size: 0.75rem;
     text-align: center;
   }
