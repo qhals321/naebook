@@ -6,3 +6,8 @@ export type InputOption = {
 }
 
 export type InputType = 'text' | 'checkbox'; // TODO etc
+
+export type LabelOption = {
+	for: string;
+	label?: string;
+}

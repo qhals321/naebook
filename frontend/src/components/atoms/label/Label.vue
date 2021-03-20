@@ -3,7 +3,8 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, PropType } from 'vue';
+  import { LabelOption } from '@/types/atoms';
 
   const option = {
     for: '',
@@ -13,6 +14,7 @@
     name: 'Label',
     props: {
       labelOption: {
+        type: Object as PropType<LabelOption>,
         required: true,
       },
     },
