@@ -61,6 +61,7 @@
       Avartar,
       Tag,
     },
+    // TODO: 백엔드 문서에 맞게 프롭스 정의
     props: {},
   });
 </script>
@@ -72,17 +73,15 @@
 
   div.influencer-card {
     font-family: var(--font-style-poor);
-
-    padding: 18px 11px 18px 11px;
+    padding: 18px 11px;
   }
 
   div.card-content {
     display: flex;
-
     margin-bottom: 11px;
   }
 
-  div.card-content .card-content-left {
+  div.card-content-left {
     margin-right: 32px;
     text-align: center;
   }
@@ -107,24 +106,10 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
-  div.card-content .card-content-right {
+  div.card-content-right {
     display: flex;
-    /*위에서 아래로 수직 배치*/
     flex-direction: column;
-    /*중앙정렬*/
     justify-content: center;
-  }
-
-  div.card-content-right .influencer-info {
-    display: flex;
-    margin-bottom: 15px;
-    justify-content: space-around;
-    font-size: 0.75rem;
-    text-align: center;
-  }
-
-  div.influencer-info .influencer-info-title {
-    font-weight: 900; /* font-weight가 동작안함*/
   }
 
   div.card-content-right .influencer-introduce {
@@ -133,6 +118,18 @@
     text-align: center;
     border: 1px solid #c4c4c4;
     border-radius: 12px;
+  }
+
+  div.card-content-right .influencer-info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  div.influencer-info h4.influencer-info-title {
+    font-weight: 900; /* font-weight가 동작안함*/
   }
 
   ul.tag-list li.tag-list-item {
