@@ -3,11 +3,16 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, PropType } from 'vue';
+  import { LabelOption } from '@/types/atoms';
 
   export default defineComponent({
     name: 'Label',
-    props: ['option'],
+    props: {
+      option: {
+        type: Object as PropType<LabelOption>,
+      },
+    },
   });
 </script>
 

@@ -9,16 +9,17 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
-  // import { LinkOption } from '@/types/atoms';
+  import { defineComponent, PropType } from 'vue';
+  import { LinkOption } from '@/types/atoms';
 
   export default defineComponent({
     name: 'Link',
-    props: ['option'],
-    // TODO: LinkOption only refers to a type, but is being used as a value here.
-    // props: {
-    //   option: LinkOption,
-    // },
+    props: {
+      option: {
+        type: Object as PropType<LinkOption>,
+        required: true,
+      },
+    },
   });
 </script>
 
