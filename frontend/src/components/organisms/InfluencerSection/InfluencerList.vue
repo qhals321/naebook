@@ -1,7 +1,7 @@
 <template>
   <ul class="list-grid">
     <li>
-      <card />
+      <card backgroundColor="#F8F8F8" ><h2>haha</h2></card>
     </li>
     <li>
       <card />
