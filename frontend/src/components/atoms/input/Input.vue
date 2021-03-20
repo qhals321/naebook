@@ -8,7 +8,8 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, PropType } from 'vue';
+  import { InputOption } from '@/types/atoms';
 
   const option = {
     id: '',
@@ -19,7 +20,12 @@
 
   export default defineComponent({
     name: 'Input',
-    props: ['inputOption'],
+    props: {
+      inputOption: {
+        type: Object as PropType<InputOption>,
+        required: true,
+      },
+    },
     setup(props) {
       return {
         option: {
