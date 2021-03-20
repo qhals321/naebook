@@ -23,8 +23,8 @@
 </script>
 <style scoped>
   .avatar-image {
-    width: 85px;
-    height: 85px;
+    width: 100px;
+    height: 100px;
     border-radius: 100%;
   }
 </style>

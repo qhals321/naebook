@@ -62,10 +62,6 @@
       Tag,
     },
     props: {},
-
-    setup(props) {
-      return {};
-    },
   });
 </script>
 <style scoped>
@@ -97,6 +93,7 @@
 
   /* TODO: 보미님이 타이포 그래피 스타일 따로 정의해놓으신듯, 확인하기*/
   div.card-content-left h3.influencer-name {
+    margin: 0;
     font-size: 1.5rem;
     font-weight: bold;
   }
@@ -127,7 +124,7 @@
   }
 
   div.influencer-info .influencer-info-title {
-    font-weight: bold;
+    font-weight: 900; /* font-weight가 동작안함*/
   }
 
   div.card-content-right .influencer-introduce {
