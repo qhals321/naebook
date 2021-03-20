@@ -14,6 +14,11 @@
     <div class="card-right">
       <div></div>
     </div>
+    <div class="card-bottom">
+      <ul>
+        <li><tag text="언제나난극단의길을달린다" /></li>
+      </ul>
+    </div>
   </card>
 </template>
 
@@ -22,12 +27,14 @@
   import Card from '@/components/molecules/Card/Card.vue';
   import Avartar from '@/components/atoms/Avartar/Avartar.vue';
   import Button from '@/components/atoms/button/Button.vue'; // TODO: 헐 일반 태그 <button> 이랑 이름이 겹친다.
+  import Tag from '@/components/atoms/Tag/Tag.vue';
 
   export default defineComponent({
     name: 'InfluencerCard',
     components: {
       Card,
       Avartar,
+      Tag,
     },
     props: {},
 
@@ -55,6 +62,7 @@
     font-weight: bold;
   }
 
+  /* TODO: button 네이밍 이슈 해결되면 버튼 컴포넌트로 바꾸기*/
   div.card-left .follow-button {
     width: 70px;
     height: 30px;
