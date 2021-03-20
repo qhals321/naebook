@@ -1,42 +1,42 @@
 <template>
   <ul class="list-grid">
     <li>
-      <card backgroundColor="#F8F8F8" ><h2>haha</h2></card>
+      <influencer-card />
     </li>
     <li>
-      <card />
+      <influencer-card />
     </li>
     <li>
-      <card />
+      <influencer-card />
     </li>
     <li>
-      <card />
+      <influencer-card />
     </li>
     <li>
-      <card />
+      <influencer-card />
     </li>
     <li>
-      <card />
+      <influencer-card />
     </li>
     <li>
-      <card />
+      <influencer-card />
     </li>
     <li>
-      <card />
+      <influencer-card />
     </li>
     <li>
-      <card />
+      <influencer-card />
     </li>
   </ul>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import Card from '@/components/molecules/Card.vue';
+  import InfluencerCard from '@/components/molecules/InfluencerCard/InfluencerCard.vue';
 
   export default defineComponent({
     name: 'InfluencerList',
-    components: { Card },
+    components: { InfluencerCard },
   });
 </script>
 <style scoped>
