@@ -99,8 +99,7 @@
 
   /* TODO: button 네이밍 이슈 해결되면 버튼 컴포넌트로 바꾸기*/
   div.card-content-left button.follow-button {
-    width: 70px;
-    height: 30px;
+    padding: 8px 20px;
     border: 1px solid #465562;
     border-radius: 9px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -115,6 +114,7 @@
   div.card-content-right p.influencer-introduce {
     padding: 8px;
     font-size: 0.75rem;
+    line-height: 0.95rem;
     text-align: center;
     border: 1px solid #c4c4c4;
     border-radius: 12px;
