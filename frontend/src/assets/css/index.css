@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300;400;700&family=Poor+Story&display=swap');
+
 h1 {
 	font-family: var(--font-style-gaegu);
 	font-size: var(--font-title-big);
