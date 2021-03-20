@@ -1,6 +1,5 @@
 <template>
   <div>
-		<!--	TODO: 화면 확인을 위한 임시 코드  -->
     <menu-link
       v-for="(option, idx) in linkOptions"
       :key="idx"

@@ -1,4 +1,5 @@
 <template>
+	<!--	TODO: 화면 확인을 위한 임시 코드  -->
   <nav><gng-menu /></nav>
 </template>
 
