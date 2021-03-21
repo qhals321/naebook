@@ -1,16 +1,17 @@
 <template>
-  <label :for="option.for">{{ option.label }}</label>
+  <label>{{ text }}</label>
 </template>
 
 <script lang="ts">
-  import { defineComponent, PropType } from 'vue';
-  import { LabelOption } from '@/types/atoms';
+  import { defineComponent } from 'vue';
 
   export default defineComponent({
     name: 'Label',
     props: {
-      option: {
-        type: Object as PropType<LabelOption>,
+      text: {
+        type: String,
+        required: false,
+        default: '',
       },
     },
   });

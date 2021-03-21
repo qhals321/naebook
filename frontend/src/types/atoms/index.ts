@@ -7,9 +7,4 @@ export type LinkOption = {
   label: string;
 };
 
-export type LabelOption = {
-  for: string;
-  label?: string;
-}
-
 export type InputType = 'text'
