@@ -1,5 +1,5 @@
 <template>
-  <Link class="logo" name="NaeBook" />
+  <logo-link class="logo" name="NaeBook" />
 </template>
 
 <script lang="ts">
@@ -8,7 +8,7 @@
 
   export default defineComponent({
     name: 'Logo',
-    components: { Link },
+    components: { LogoLink: Link },
   });
 </script>
 
