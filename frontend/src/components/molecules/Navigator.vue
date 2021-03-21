@@ -1,6 +1,6 @@
 <template>
   <div>
-    <menu-link
+    <details-link
       v-for="(option, idx) in linkOptions"
       :key="idx"
       :link-option="option"
@@ -9,23 +9,19 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, PropType } from 'vue';
   import Link from '@/components/atoms/link/Link.vue';
+  import { LinkOption } from '@/types/atoms';
 
-  const linkOptions = [
-    { path: '/', label: '추천' },
-    { path: '/review', label: '리뷰' },
-    { path: '/library', label: '라이브러리' },
-  ];
   export default defineComponent({
-    name: 'GngMenu',
+    name: 'Navigator',
     components: {
-      MenuLink: Link,
+      DetailsLink: Link,
     },
-    setup() {
-      return {
-        linkOptions,
-      };
+    props: {
+      linkOptions: {
+        type: Object as PropType<LinkOption[]>,
+      },
     },
   });
 </script>

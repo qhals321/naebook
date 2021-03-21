@@ -1,14 +1,25 @@
 <template>
   <!--	TODO: 화면 확인을 위한 임시 코드  -->
-  <nav><gng-menu /></nav>
+  <nav><navigator :link-options="menuLinkOptions" /></nav>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import GngMenu from '@/components/molecules/GnbMenu.vue';
+  import Navigator from '@/components/molecules/Navigator.vue';
+  import { LinkOption } from '@/types/atoms';
   export default defineComponent({
     name: 'ContentNav',
-    components: { GngMenu },
+    components: { Navigator },
+    setup() {
+      const menuLinkOptions: LinkOption[] = [
+        { path: '/', label: '추천' },
+        { path: '/review', label: '리뷰' },
+        { path: '/library', label: '라이브러리' },
+      ];
+      return {
+        menuLinkOptions,
+      };
+    },
   });
 </script>
 
