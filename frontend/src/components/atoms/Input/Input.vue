@@ -1,38 +1,29 @@
 <template>
-  <input
-    :id="defaultOption.id"
-    :class="defaultOption.class"
-    :type="defaultOption.type"
-    :placeholder="defaultOption.placeholder"
-  />
+  <input :type="type" :placeholder="placeholder" />
 </template>
 
 <script lang="ts">
   import { defineComponent, PropType } from 'vue';
-  import { InputOption } from '@/types/atoms';
-
-  const defaultOption: InputOption = {
-    id: '',
-    class: 'white-regular',
-    type: 'text',
-    placeholder: '검색어를 입력하세요',
-  };
+  import { InputType } from '@/types/atoms';
 
   export default defineComponent({
     name: 'Input',
     props: {
-      option: {
-        type: Object as PropType<InputOption>,
+      type: {
+        type: String as PropType<InputType>,
+        required: false,
+        default: 'input',
       },
-    },
-    setup(props) {
-      return {
-        defaultOption: Object.assign(defaultOption, props.option),
-      };
+      placeholder: {
+        type: String,
+        required: false,
+        default: '',
+      },
     },
   });
 </script>
 
+<!-- TODO 사용처로 옮기기 -->
 <style scoped>
   .white-regular {
     height: 40px;

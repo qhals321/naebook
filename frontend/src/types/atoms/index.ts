@@ -12,11 +12,4 @@ export type LabelOption = {
   label?: string;
 }
 
-export type InputOption = {
-  id: string;
-  class?: string;
-  type?: InputType;
-  placeholder?: string;
-}
-
 export type InputType = 'text'
