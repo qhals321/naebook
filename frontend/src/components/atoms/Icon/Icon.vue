@@ -18,7 +18,7 @@
   };
 
   export default defineComponent({
-    name: 'IconComponent',
+    name: 'Icon',
     components: { InlineIcon },
     props: ['iconOption'],
     data() {
