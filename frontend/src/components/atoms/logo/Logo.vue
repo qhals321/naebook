@@ -1,5 +1,5 @@
 <template>
-  <Link :option="logoOption" />
+  <logo-link :link-option="logoOption" />
 </template>
 
 <script lang="ts">
@@ -16,7 +16,7 @@
 
   export default defineComponent({
     name: 'Logo',
-    components: { Link },
+    components: { LogoLink: Link },
     setup() {
       return {
         logoOption,
