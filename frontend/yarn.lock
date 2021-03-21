@@ -1671,6 +1671,21 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@iconify-icons/bi@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@iconify-icons/bi/-/bi-1.1.2.tgz#db41cdf318f64d365c9fe700fa2d7b6c919175b9"
+  integrity sha512-rHLWcI63QEcYW8EP5grcvmbBNlKIiixIB92aQE4cKZBoEGGd0HUdvQkUqyr9N2dVt/DqWK/KR4aqvdHLPUwUjA==
+
+"@iconify-icons/carbon@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@iconify-icons/carbon/-/carbon-1.1.3.tgz#1511e688551357fd635e9b0dbf22e940cab4f2b6"
+  integrity sha512-Mcz/3Wz3jh2yng/pDlSjz4i379dejcArs5jB8vJd/sSNBaHqo62Me4v5zwP03FJOpvehML2sUxE+hsXZQ3sxJg==
+
+"@iconify/vue@^2.0.0-rc.3":
+  version "2.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/@iconify/vue/-/vue-2.0.0-rc.3.tgz#50bb3ce68bd5038bcd23fc61df31c95c623e7f94"
+  integrity sha512-McYHQZBKZx+knO7DNODOhspIYCHYf0ogzk9YbzZsPdSAhTt7M42aXcczGK/Y8O2txvAwejtscwLX77jVbknHbw==
+
 "@icons/material@^0.2.4":
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/@icons/material/-/material-0.2.4.tgz#e90c9f71768b3736e76d7dd6783fc6c2afa88bc8"

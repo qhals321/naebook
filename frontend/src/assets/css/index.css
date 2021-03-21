@@ -34,16 +34,16 @@ span {
 	color: var(--color-black);
 }
 
-svg {
-	font-size: var(--font-title-micro);
-	margin: 0 5px;
-	cursor: pointer;
-}
+/*svg {*/
+/*	font-size: var(--font-title-micro);*/
+/*	margin: 0 5px;*/
+/*	cursor: pointer;*/
+/*}*/
 
-svg circle, g, path {
-	cursor: pointer;
-	color: var(--color-white);
-}
+/*svg circle, g, path {*/
+/*	cursor: pointer;*/
+/*	color: var(--color-white);*/
+/*}*/
 
 * {
 	margin: 0;
