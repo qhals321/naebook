@@ -1,22 +1,20 @@
 <template>
-  <router-link
-    v-if="option.type === 'link'"
-    :class="option.class"
-    :to="option.path"
-    >{{ option.label }}</router-link
-  >
-  <a v-else :class="option.class" :href="option.path">{{ option.label }}</a>
+  <router-link :to="path">{{ name }}</router-link>
 </template>
 
 <script lang="ts">
-  import { defineComponent, PropType } from 'vue';
-  import { LinkOption } from '@/types/atoms';
+  import { defineComponent } from 'vue';
 
   export default defineComponent({
     name: 'Link',
     props: {
-      option: {
-        type: Object as PropType<LinkOption>,
+      path: {
+        type: String,
+        required: false,
+        default: '/',
+      },
+      name: {
+        type: String,
         required: true,
       },
     },
@@ -36,6 +34,7 @@
     color: var(--color-black);
   }
 
+  /* TODO 사용부로 옮기기 */
   .logo {
     font-size: var(--font-logo);
     color: var(--color-white);
