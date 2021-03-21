@@ -9,7 +9,7 @@
 
   const logoOption: LinkOption = {
     type: 'link',
-    class: 'logo',
+    class: 'Logo',
     path: '/',
     label: 'NaeBook',
   };
