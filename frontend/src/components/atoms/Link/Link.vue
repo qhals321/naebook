@@ -23,6 +23,7 @@
 
 <style scoped>
   a {
+    cursor: pointer;
     font-family: var(--font-style-gaegu);
     font-size: var(--font-title-regular);
     font-weight: var(--weight-bold);
@@ -32,11 +33,5 @@
 
   .router-link-exact-active {
     color: var(--color-black);
-  }
-
-  /* TODO 사용부로 옮기기 */
-  .logo {
-    font-size: var(--font-logo);
-    color: var(--color-white);
   }
 </style>
