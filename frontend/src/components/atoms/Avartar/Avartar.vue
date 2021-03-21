@@ -1,5 +1,5 @@
 <template>
-  <img :src="imageUrl" :alt="alt" />
+  <img class="avatar-image" :src="imageUrl" :alt="alt" />
 </template>
 
 <script lang="ts">
@@ -21,3 +21,10 @@
     },
   });
 </script>
+<style scoped>
+  .avatar-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+  }
+</style>
