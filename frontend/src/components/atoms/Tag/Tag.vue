@@ -1,11 +1,11 @@
 <template>
   <span class="tag">
-    {{ text }} <icon class="tag-icon clear" iconName="baselineClear" />
+    {{ tagText }} <icon class="tag-icon clear" iconName="baselineClear" />
   </span>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, toRefs } from 'vue';
   import Icon from '@/components/atoms/Icon/Icon.vue';
 
   export default defineComponent({
@@ -21,9 +21,9 @@
     },
 
     setup(props) {
-      const { text } = props;
+      const { text } = toRefs(props);
       return {
-        text,
+        tagText: text,
       };
     },
   });
