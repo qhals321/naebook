@@ -3,14 +3,13 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, PropType } from 'vue';
-  import { InputType } from '@/types/atoms';
+  import { defineComponent } from 'vue';
 
   export default defineComponent({
     name: 'Input',
     props: {
       type: {
-        type: String as PropType<InputType>,
+        type: String,
         required: false,
         default: 'input',
       },
