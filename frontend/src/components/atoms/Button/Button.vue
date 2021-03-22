@@ -1,5 +1,5 @@
 <template>
-  <button>test button</button>
+  <button>{{ text }}</button>
 </template>
 
 <script lang="ts">
@@ -7,6 +7,11 @@
 
   export default defineComponent({
     name: 'Button',
-    components: {},
+    props: {
+      text: {
+        type: String,
+        required: true,
+      },
+    },
   });
 </script>

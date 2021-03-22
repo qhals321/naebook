@@ -51,7 +51,7 @@
   import { defineComponent } from 'vue';
   import Card from '@/components/molecules/Card/Card.vue';
   import Avartar from '@/components/atoms/Avartar/Avartar.vue';
-  import Button from '@/components/atoms/button/Button.vue'; // TODO: 헐 일반 태그 <button> 이랑 이름이 겹친다.
+  import Button from '@/components/atoms/Button/Button.vue'; // TODO: 헐 일반 태그 <Button> 이랑 이름이 겹친다.
   import Tag from '@/components/atoms/Tag/Tag.vue';
 
   export default defineComponent({
@@ -97,7 +97,7 @@
     font-weight: bold;
   }
 
-  /* TODO: button 네이밍 이슈 해결되면 버튼 컴포넌트로 바꾸기*/
+  /* TODO: Button 네이밍 이슈 해결되면 버튼 컴포넌트로 바꾸기*/
   div.card-content-left button.follow-button {
     padding: 8px 20px;
     border: 1px solid #465562;
