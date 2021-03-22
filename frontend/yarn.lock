@@ -1671,10 +1671,15 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@iconify-icons/mdi-light@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@iconify-icons/mdi-light/-/mdi-light-1.1.0.tgz#30c2308e2e599c96da97f8d60a1aabf91504e712"
-  integrity sha512-pV69tNZO9u0qZFVcy5VFmg7dL+Yq3g8DrkCIMGnW3ukgcYDZG2M2oAKeIxHUCIE/11khAsYlBdrUFglTIcbDxg==
+"@iconify-icons/bi@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@iconify-icons/bi/-/bi-1.1.2.tgz#db41cdf318f64d365c9fe700fa2d7b6c919175b9"
+  integrity sha512-rHLWcI63QEcYW8EP5grcvmbBNlKIiixIB92aQE4cKZBoEGGd0HUdvQkUqyr9N2dVt/DqWK/KR4aqvdHLPUwUjA==
+
+"@iconify-icons/carbon@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@iconify-icons/carbon/-/carbon-1.1.3.tgz#1511e688551357fd635e9b0dbf22e940cab4f2b6"
+  integrity sha512-Mcz/3Wz3jh2yng/pDlSjz4i379dejcArs5jB8vJd/sSNBaHqo62Me4v5zwP03FJOpvehML2sUxE+hsXZQ3sxJg==
 
 "@iconify/icons-ic@^1.1.3":
   version "1.1.3"
