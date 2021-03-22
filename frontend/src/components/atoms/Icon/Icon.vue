@@ -1,15 +1,18 @@
 <template>
-  <iconify-icon :icon="icons[iconName]" />
+  <inline-icon :icon="icons[iconName]" />
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import IconifyIcon from '@iconify/vue';
+  import { InlineIcon } from '@iconify/vue';
   import baselineClear from '@iconify/icons-ic/baseline-clear';
+  import notificationNew from '@iconify-icons/carbon/notification-new';
+  import notification from '@iconify-icons/carbon/notification';
+  import profile from '@iconify-icons/bi/person-circle';
 
   export default defineComponent({
     name: 'Icon',
     components: {
-      IconifyIcon,
+      InlineIcon,
     },
     props: {
       iconName: {
@@ -22,6 +25,9 @@
         // https://iconify.design/icon-sets/ic/
         icons: {
           baselineClear: baselineClear,
+          notificationNew,
+          notification,
+          profile,
         },
       };
     },
