@@ -45,6 +45,7 @@
     margin: auto;
   }
   /*글로벌로 빼면 좋을 듯*/
+  /*아니면 <List/> 컴포넌트를 만들어서 이것도 atom이나 molecule로 만들까 -> 별로 일수도 있을거 같아요 고민중, 의견 환영*/
   .list-grid {
     display: grid;
     grid-column: 3;
