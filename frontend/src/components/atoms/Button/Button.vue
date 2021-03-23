@@ -15,3 +15,11 @@
     },
   });
 </script>
+
+<style scoped>
+  button {
+    cursor: pointer;
+    font-family: var(--font-style-poor);
+    font-size: var(--font-text-small);
+  }
+</style>
