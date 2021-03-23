@@ -1,1 +1,1 @@
-const typings = 'test';
+// test
