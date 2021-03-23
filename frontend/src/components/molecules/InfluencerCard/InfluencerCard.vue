@@ -10,7 +10,7 @@
           />
           <h3 class="influencer-name">나봄</h3>
         </div>
-        <button class="follow-button">팔로우</button>
+        <follow-button class="follow-button" text="팔로우" />
       </div>
       <div class="card-content-right">
         <div class="influencer-info">
@@ -51,7 +51,7 @@
   import { defineComponent } from 'vue';
   import Card from '@/components/molecules/Card/Card.vue';
   import Avartar from '@/components/atoms/Avartar/Avartar.vue';
-  import Button from '@/components/atoms/button/Button.vue'; // TODO: 헐 일반 태그 <button> 이랑 이름이 겹친다.
+  import FollowButton from '@/components/atoms/button/Button.vue'; // TODO: 헐 일반 태그 <button> 이랑 이름이 겹친다.
   import Tag from '@/components/atoms/Tag/Tag.vue';
 
   export default defineComponent({
@@ -60,6 +60,7 @@
       Card,
       Avartar,
       Tag,
+      FollowButton,
     },
     // TODO: 백엔드 문서에 맞게 프롭스 정의
     props: {},
@@ -95,14 +96,6 @@
     margin: 0;
     font-size: 1.5rem;
     font-weight: bold;
-  }
-
-  /* TODO: button 네이밍 이슈 해결되면 버튼 컴포넌트로 바꾸기*/
-  div.card-content-left button.follow-button {
-    padding: 8px 20px;
-    border: 1px solid #465562;
-    border-radius: 9px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
   div.card-content-right {
