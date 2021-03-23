@@ -7,6 +7,6 @@
 
   export default defineComponent({
     name: 'Button',
-    components: {},
+    props: {},
   });
 </script>
