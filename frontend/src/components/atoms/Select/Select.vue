@@ -13,4 +13,11 @@
   });
 </script>
 
-<style scoped></style>
+<style scoped>
+  select {
+    min-width: 70px;
+    cursor: pointer;
+    font-family: var(--font-style-poor);
+    font-size: var(--font-text-small);
+  }
+</style>
