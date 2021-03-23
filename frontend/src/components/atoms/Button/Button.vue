@@ -1,17 +1,24 @@
 <template>
-  <button>{{ text }}</button>
+  <button class="button">{{ buttonText }}</button>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, toRefs } from 'vue';
 
   export default defineComponent({
     name: 'Button',
     props: {
       text: {
         type: String,
-        required: true,
+        required: false,
+        default: 'text',
       },
+    },
+    setup(props) {
+      const { text } = toRefs(props);
+      return {
+        buttonText: text,
+      };
     },
   });
 </script>
@@ -21,5 +28,9 @@
     cursor: pointer;
     font-family: var(--font-style-poor);
     font-size: var(--font-text-small);
+    padding: 8px 20px;
+    border: 1px solid #465562;
+    border-radius: 9px;
+    box-shadow: var(--box-shadow);
   }
 </style>

@@ -16,7 +16,7 @@
 <style scoped>
   .content {
     margin: 0 auto;
-    max-width: 1728px;
+    max-width: 1440px;
     background-color: var(--color-navy);
   }
 </style>
