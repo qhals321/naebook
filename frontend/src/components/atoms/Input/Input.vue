@@ -27,6 +27,7 @@
     padding: 10px 10px 10px 20px;
     background-color: var(--color-white);
     color: var(--color-dark-gray);
+    font-family: var(--font-style-poor);
   }
 
   /* TODO: 사용부로 옮기기 */
