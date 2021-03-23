@@ -1,14 +1,22 @@
 <template>
-  <header>header</header>
+  <!--	TODO: 화면 확인용 -->
+  <header class="content"><search /></header>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue';
+  import Search from '@/components/molecules/Search/Search.vue';
 
   export default defineComponent({
     name: 'ContentHeader',
-    components: {},
+    components: { Search },
   });
 </script>
 
-<style scoped></style>
+<style scoped>
+  .content {
+    margin: 0 auto;
+    max-width: 1728px;
+    background-color: var(--color-navy);
+  }
+</style>
