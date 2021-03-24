@@ -1,5 +1,7 @@
 <template>
-  <label>{{ text }}</label>
+  <label
+    ><slot>{{ text }}</slot></label
+  >
 </template>
 
 <script lang="ts">
