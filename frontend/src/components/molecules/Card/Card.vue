@@ -35,7 +35,6 @@
   .card {
     margin: 0;
     width: 424px;
-    /* height: 200px; */
     border-radius: 16px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
