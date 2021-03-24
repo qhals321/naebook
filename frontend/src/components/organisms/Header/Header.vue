@@ -1,31 +1,22 @@
 <template>
-  <header>
-    <div class="header-container">
-      <logo />
-      <search-keyword class="search-keyword" :use-clear-icon="true" />
-    </div>
-  </header>
+  <div class="header-container">
+    <logo />
+    <search-keyword class="search-keyword" :use-clear-icon="true" />
+  </div>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import SearchKeyword from '@/components/molecules/Search/SearchKeyword.vue';
   import Logo from '@/components/atoms/Logo/Logo.vue';
+  import SearchKeyword from '@/components/molecules/Search/SearchKeyword.vue';
+
   export default defineComponent({
-    name: 'ContentHeader',
+    name: 'Header',
     components: { Logo, SearchKeyword },
   });
 </script>
 
 <style scoped>
-  header {
-    margin: 0 auto;
-    background-color: var(--color-navy);
-    height: 8rem;
-    min-width: 474px;
-    max-width: 1440px;
-  }
-
   .header-container {
     width: 100%;
     height: 100%;
