@@ -27,12 +27,6 @@
     padding: 10px 10px 10px 20px;
     background-color: var(--color-white);
     color: var(--color-dark-gray);
-  }
-
-  /* TODO: 사용부로 옮기기 */
-  .white-regular {
-    height: 40px;
-    width: 290px;
-    border: 1px solid var(--color-white);
+    font-family: var(--font-style-poor);
   }
 </style>

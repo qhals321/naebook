@@ -18,9 +18,12 @@
 </script>
 <style scoped>
   button {
+    cursor: pointer;
+    font-family: var(--font-style-poor);
+    font-size: var(--font-text-small);
     padding: 8px 20px;
     border: 1px solid #465562;
     border-radius: 9px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--box-shadow);
   }
 </style>

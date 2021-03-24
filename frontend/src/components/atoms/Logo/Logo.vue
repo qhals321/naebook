@@ -4,11 +4,11 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import Link from '@/components/atoms/Link/Link.vue';
+  import LogoLink from '@/components/atoms/Link/Link.vue';
 
   export default defineComponent({
     name: 'Logo',
-    components: { LogoLink: Link },
+    components: { LogoLink },
   });
 </script>
 
