@@ -51,7 +51,7 @@
   import { defineComponent } from 'vue';
   import Card from '@/components/molecules/Card/Card.vue';
   import Avartar from '@/components/atoms/Avartar/Avartar.vue';
-  import FollowButton from '@/components/atoms/button/Button.vue'; // TODO: 헐 일반 태그 <button> 이랑 이름이 겹친다.
+  import FollowButton from '@/components/atoms/Button/Button.vue'; // TODO: 헐 일반 태그 <Button> 이랑 이름이 겹친다.
   import Tag from '@/components/atoms/Tag/Tag.vue';
 
   export default defineComponent({
