@@ -9,7 +9,7 @@
   import { defineComponent } from 'vue';
   import Icon from '@/components/atoms/Icon/Icon.vue';
   export default defineComponent({
-    name: 'ContentNav',
+    name: 'PageNav',
     components: { Icon },
   });
 </script>
