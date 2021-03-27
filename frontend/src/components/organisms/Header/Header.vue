@@ -38,9 +38,9 @@
   }
 
   @media screen and (max-width: 600px) {
-	  header {
-		  height: 10rem;
-	  }
+    header {
+      height: 10rem;
+    }
     header .header-container {
       display: inline-grid;
       grid-template-columns: 1fr;
