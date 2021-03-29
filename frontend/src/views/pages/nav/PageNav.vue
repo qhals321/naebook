@@ -1,17 +1,20 @@
 <template>
-  <nav class="">
-    nav
-    <icon icon-name="notificationNew" />
+  <nav class="navigator">
+    <content-nav />
   </nav>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import Icon from '@/components/atoms/Icon/Icon.vue';
+  import ContentNav from '@/components/organisms/Nav/Nav.vue';
   export default defineComponent({
     name: 'PageNav',
-    components: { Icon },
+    components: { ContentNav },
   });
 </script>
 
-<style scoped></style>
+<style scoped>
+  .navigator {
+    background-color: var(--color-beige);
+  }
+</style>
