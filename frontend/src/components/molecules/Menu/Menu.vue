@@ -8,8 +8,8 @@
       :name="menu.name"
     >
       <template v-if="menu.icon">
-        <icon class="pointer" :icon-name="menu.icon" />
-        <span class="menu-name pointer">{{ menu.name }}</span>
+        <icon class="icon" :icon-name="menu.icon" />
+        <span class="menu-name">{{ menu.name }}</span>
       </template>
     </menu-link>
   </div>
@@ -49,12 +49,13 @@
     align-items: center;
   }
 
-  .pointer {
-    cursor: pointer;
+  .icon {
+    color: var(--color-navy);
   }
 
   .menu-name {
-    color: var(--color-dark-gray);
+    cursor: pointer;
+    color: var(--color-navy);
     font-size: var(--font-title-micro);
     padding-left: 4px;
   }
