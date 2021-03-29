@@ -27,7 +27,6 @@
   a {
     cursor: pointer;
     font-family: var(--font-style-gaegu);
-    /*font-size: var(--font-title-regular);*/
     font-weight: var(--weight-bold);
     display: inline-block;
     color: var(--color-dark-gray);
@@ -36,14 +35,4 @@
   .router-link-exact-active {
     color: var(--color-black);
   }
-
-  /*.menu-link {*/
-  /*  display: inline-flex;*/
-  /*  justify-content: center;*/
-  /*  align-items: center;*/
-  /*}*/
-
-  /*.menu-name {*/
-  /*  font-size: var(--font-title-micro);*/
-  /*}*/
 </style>
