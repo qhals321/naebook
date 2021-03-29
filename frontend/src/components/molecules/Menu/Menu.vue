@@ -58,4 +58,16 @@
     font-size: var(--font-title-micro);
     padding-left: 4px;
   }
+
+  @media screen and (max-width: 600px) {
+    .menu-link:not(:last-child) {
+      padding-right: 12px;
+    }
+    .menu-link {
+      font-size: var(--font-title-micro);
+    }
+    .menu-name {
+      font-size: var(--font-text-small);
+    }
+  }
 </style>
