@@ -15,6 +15,8 @@
 
 <style scoped>
   .navigator {
+    max-width: 1440px;
+    min-width: 474px;
     background-color: var(--color-beige);
   }
 </style>
