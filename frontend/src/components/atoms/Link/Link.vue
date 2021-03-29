@@ -29,7 +29,7 @@
     font-family: var(--font-style-gaegu);
     font-weight: var(--weight-bold);
     display: inline-block;
-    color: var(--color-dark-gray);
+    color: var(--color-navy);
   }
 
   .router-link-exact-active {
