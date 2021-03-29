@@ -1,5 +1,5 @@
 <template>
-  <inline-icon :icon="icons[iconName]" />
+  <inline-icon class="icon" :icon="icons[iconName]" />
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
@@ -33,3 +33,8 @@
     },
   });
 </script>
+<style scoped>
+  .icon {
+    cursor: pointer;
+  }
+</style>
