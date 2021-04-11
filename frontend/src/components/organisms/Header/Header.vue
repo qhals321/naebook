@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="header-container">
-      <logo />
+      <logo class="logo" />
       <search-keyword class="search-keyword" :use-clear-icon="true" />
     </div>
   </header>
@@ -9,36 +9,47 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import SearchKeyword from '@/components/molecules/Search/SearchKeyword.vue';
   import Logo from '@/components/atoms/Logo/Logo.vue';
+  import SearchKeyword from '@/components/molecules/Search/SearchKeyword.vue';
+
   export default defineComponent({
-    name: 'ContentHeader',
+    name: 'Header',
     components: { Logo, SearchKeyword },
   });
 </script>
 
 <style scoped>
   header {
-    margin: 0 auto;
     background-color: var(--color-navy);
     height: 8rem;
     min-width: 474px;
     max-width: 1440px;
   }
-
-  .header-container {
-    width: 100%;
+  header .header-container {
     height: 100%;
-    display: inline-grid;
-    grid-column: 3;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+
+    column-gap: 24px;
     justify-items: center;
     align-items: center;
     grid-row: 1;
-    grid-template-columns: 12rem 1fr 20rem;
     padding: 0 32px;
   }
-  .search-keyword {
-    grid-column: 3/4;
-    height: 32px;
+
+  @media screen and (max-width: 600px) {
+    header {
+      height: 10rem;
+    }
+    header .header-container {
+      display: inline-grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+      column-gap: 0;
+      width: 100%;
+      height: 80%;
+      margin-top: 10px;
+      padding: 0;
+    }
   }
 </style>

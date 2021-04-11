@@ -18,5 +18,14 @@
     font-size: var(--font-logo);
     color: var(--color-white);
     background-color: var(--color-navy);
+
+    justify-self: first baseline;
+  }
+
+  @media screen and (max-width: 600px) {
+    .logo {
+      grid-row: 1 / 2;
+      justify-self: center;
+    }
   }
 </style>
