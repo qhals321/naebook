@@ -1,5 +1,7 @@
 <template>
-  <router-link :to="path">{{ name }}</router-link>
+  <router-link :to="path"
+    ><slot>{{ name }}</slot></router-link
+  >
 </template>
 
 <script lang="ts">
@@ -25,10 +27,9 @@
   a {
     cursor: pointer;
     font-family: var(--font-style-gaegu);
-    font-size: var(--font-title-regular);
     font-weight: var(--weight-bold);
     display: inline-block;
-    color: var(--color-dark-gray);
+    color: var(--color-navy);
   }
 
   .router-link-exact-active {
