@@ -7,7 +7,7 @@
       :options="options"
     />
     <div class="search-content-keyword">
-      <search-label for="keyword-input" class="keyword-input">
+      <search-label for="keyword-input" class="keyword-label">
         <search-input id="keyword-input" />
         <icon
           v-if="useClearIcon"
@@ -58,12 +58,16 @@
 
 <style scoped>
   div.search-content {
-    display: inline-flex;
-    justify-content: center;
-    align-content: center;
+    display: inline-grid;
+    grid-template-columns: 70px 1fr;
+    column-gap: 10px;
+    justify-self: last baseline;
+    height: 32px;
+  }
+  div.search-content .search-content-filter {
+    display: none;
   }
   div.search-content select {
-    margin-right: 10px;
     font-family: var(--font-style-gaegu);
     color: var(--color-white);
     box-shadow: var(--box-shadow);
@@ -74,7 +78,7 @@
     box-shadow: var(--box-shadow);
     border: 1px solid var(--color-white);
   }
-  div.search-content-keyword .keyword-input {
+  div.search-content-keyword .keyword-label {
     position: relative;
   }
   div.search-content-keyword input {
@@ -97,5 +101,12 @@
     background-color: var(--color-navy);
     border-radius: 0;
     box-shadow: none;
+  }
+
+  @media screen and (max-width: 600px) {
+    div.search-content {
+      grid-row: 2/3;
+      justify-self: center;
+    }
   }
 </style>

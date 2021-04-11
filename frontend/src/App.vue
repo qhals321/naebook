@@ -9,7 +9,7 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import ContentHeader from '@/views/pages/header/ContentHeader.vue';
+  import ContentHeader from '@/views/pages/header/PageHeader.vue';
   import ContentNav from '@/views/pages/nav/ContentNav.vue';
   import ContentMain from '@/views/pages/main/ContentMain.vue';
 
